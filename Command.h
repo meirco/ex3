@@ -17,15 +17,6 @@ public:
 
 //openDataServer
 //connect
-//breaks
-//throttle
-//heading
-//airspeed
-//roll
-//pitch
-//rudder
-//aileron
-//elevator
 //alt
 //var
 //bind there is a note at the targil instructions page 5 at the end.
@@ -33,6 +24,8 @@ public:
 //while
 //if
 //print
+//sleep
 
+// git clone https://github.com/meirco/ex3.git
 
 #endif //EX3_COMMAND_H

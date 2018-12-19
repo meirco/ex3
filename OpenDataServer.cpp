@@ -2,16 +2,37 @@
 // Created by gil on 19/12/18.
 //
 
+//struct
+//execute- get the list<string>
+//open the server and the socket -- bind, listen, accept
+//read the lines from the xml
+//saperate with "," byh the XML format
+//save the read lines in a data base that we can pull by o(1).
+
+
 #include <netinet/in.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <unistd.h>
-#include <string.h>
-//#include <sys/socket.h>
-//#include <netdb.h>
+#include <cstring>
+
 #include "OpenDataServer.h"
 
-void openServer( int argc, list list1){
+using namespace std;
+
+struct ArgsStruct
+{
+    list<string> listOfArgs;
+    int numOfArgs;
+};
+
+void* openServer(void* args){
+
+    struct ArgsStruct* argsStruct = (struct ArgsStruct*) args;
+
+//    ArgsStruct * argsStruct = new ArgsStruct();
+//    argsStruct.listOfArgs = list1;
+//    argsStruct.numOfArgs = argc;
 
     int sockfd, newsockfd, portno, clilen;
     char buffer[256];
@@ -75,11 +96,12 @@ void openServer( int argc, list list1){
         exit(1);
     }
 
-
 }
 
 void OpenDataServer::execute(list<string> list1) {
-
-
-
+    struct ArgsStruct* argsStruct = new ArgsStruct();
+    argsStruct->listOfArgs =list1;
+    argsStruct->numOfArgs = list1.size();
+    pthread_t trid;
+    pthread_create(&trid, nullptr, openServer, argsStruct);
 }
