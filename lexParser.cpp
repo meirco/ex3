@@ -81,4 +81,7 @@ void lexParser:: parsering(list<string> lexeredList) {
 
 void lexParser::fillMap(map<string, command> map1) {
     map1.insert("openDataServer", openDataServer);
+    map1.insert("connect", connect);
+    map1.insert("print", print);
+    map1.insert("sleep", sleep);
 }
