@@ -2,7 +2,7 @@
 // Created by meir on 19/12/18.
 //
 
-#include "lexParser.h"
+#include "LexParser.h"
 #include <string>
 #include <fstream>
 #include <iostream>

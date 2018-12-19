@@ -2,7 +2,7 @@
 #include <list>
 #include "fstream"
 #include "map"
-#include "lexParser.h"
+#include "LexParser.h"
 #include "command.h"
 
 using namespace std;

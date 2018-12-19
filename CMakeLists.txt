@@ -3,4 +3,4 @@ project(ex3)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ex3 main.cpp lexParser.cpp lexParser.h openDataServer.cpp openDataServer.h command.cpp shuntingYardAlgo.cpp shuntingYardAlgo.h expression.h condition.h)
+add_executable(ex3 Main.cpp LexParser.cpp LexParser.h OpenDataServer.cpp OpenDataServer.h Command.cpp ShuntingYardAlgo.cpp ShuntingYardAlgo.h Expression.h Condition.h)
