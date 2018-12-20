@@ -1,18 +1,6 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.13)
 project(ex3)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES
-        Command.h
-        Condition.h
-        Expression.h
-        LexParser.cpp
-        LexParser.h
-        Main.cpp
-        OpenDataServer.cpp
-        OpenDataServer.h
-        ShuntingYardAlgo.cpp
-        ShuntingYardAlgo.h)
-
-add_executable(ex3 ${SOURCE_FILES})
+add_executable(ex3 Main.cpp LexParser.cpp LexParser.h OpenDataServer.cpp OpenDataServer.h Command.h ShuntingYardAlgo.cpp ShuntingYardAlgo.h Expression.h Condition.h)

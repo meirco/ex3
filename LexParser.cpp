@@ -19,6 +19,7 @@ lexParser::lexParser(string str) {
     this->str = str;
     lexerList = start(str);
     parsering(lexerList);
+    ptrCommandMap = &
 
 }
 
@@ -74,14 +75,28 @@ list<string> lexParser:: start (string str) {
 
 
 void lexParser:: parsering(list<string> lexeredList) {
-    fillMap(parserMap);
+    fillMap(commandMap);
+
+    int index = 0;
+    Command c =
+    }
+
+
 
 }
 
 
-void lexParser::fillMap(map<string, command> map1) {
+void lexParser::fillMap(map<string, Command> map1) {
     map1.insert("openDataServer", openDataServer);
     map1.insert("connect", connect);
     map1.insert("print", print);
     map1.insert("sleep", sleep);
+    map1.insert("var", var);
+
+
+
+
+
+
+
 }

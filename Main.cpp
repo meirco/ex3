@@ -3,11 +3,11 @@
 #include "fstream"
 #include "map"
 #include "LexParser.h"
-#include "command.h"
+#include "Command.h"
 
 using namespace std;
 
-map<string, command> commandMap;
+map<string, Command> commandMap;
 list<string> lexeredList;
 
 int main() {

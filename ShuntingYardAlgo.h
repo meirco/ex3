@@ -150,7 +150,6 @@ class ShuntingYardAlgo {
         return 0;
     }
 
-// This code is contributed by Nikhil jindal.
 
 };
 
