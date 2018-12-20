@@ -45,8 +45,8 @@ class ShuntingYardAlgo {
         double i;
 
         // stack to store integer values.
-        //stack <int> values;
-        queue<Expression> queue1;
+        stack <int> values;
+//        queue<Expression> queue1;
 
         // stack to store operators.
         stack<char> ops;

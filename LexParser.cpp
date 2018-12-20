@@ -78,7 +78,7 @@ void lexParser:: parsering(list<string> lexeredList) {
     fillMap(commandMap);
 
     int index = 0;
-    Command c =
+    Command* c = commandMap.find(lexeredList-)
     }
 
 
@@ -86,12 +86,16 @@ void lexParser:: parsering(list<string> lexeredList) {
 }
 
 
-void lexParser::fillMap(map<string, Command> map1) {
-    map1.insert("openDataServer", openDataServer);
-    map1.insert("connect", connect);
-    map1.insert("print", print);
-    map1.insert("sleep", sleep);
-    map1.insert("var", var);
+void lexParser::fillMap(map<string, Command*> map1) {
+    map1.insert("openDataServer", OpenDataServer);
+    map1.insert("connect", Connect);
+    map1.insert("print", Print);
+    map1.insert("sleep", Sleep);
+    map1.insert("var", Var);
+    map1.insert("bind", Bind);
+    map1.insert("=", Equal);
+    map1.insert("while", While);
+    map1.insert("if", If);
 
 
 

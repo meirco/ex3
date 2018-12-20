@@ -18,7 +18,7 @@ class lexParser {
 public:
     string str;
     list<string>lexerList;
-    map<string, Command> commandMap;
+    map<string, Command*> commandMap;
 
 
 
@@ -29,7 +29,7 @@ public:
 
     void parsering(list<string> list1);
 
-    void fillMap(map<string, Command> map1);
+    void fillMap(map<string, Command*> map1);
 
 };
 
