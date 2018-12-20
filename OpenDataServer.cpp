@@ -9,12 +9,35 @@
 //saperate with "," byh the XML format
 //save the read lines in a data base that we can pull by o(1).
 
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <unistd.h>
+//#include <stdio.h>
+//#include <sys/socket.h>
+//#include <stdlib.h>
+//#include <netinet/in.h>
+//#include <string.h>
+//#include <netdb.h>
+//#include <unistd.h>
+//
+//#include <netinet/in.h>
+//#include <cstdio>
+//#include <cstdlib>
+//#include <unistd.h>
+//#include <cstring>
 
-#include <netinet/in.h>
-#include <cstdio>
-#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
+#include <netdb.h>
 #include <unistd.h>
-#include <cstring>
+#include <netinet/in.h>
+
+#include <string.h>
+#include <map>
+#include <sys/socket.h>
+#include <cstdlib>
+#include <bits/socket_type.h>
+#include <bits/socket.h>
 
 #include "OpenDataServer.h"
 
