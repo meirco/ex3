@@ -45,7 +45,7 @@ using namespace std;
 
 struct ArgsStruct
 {
-    list<string> listOfArgs;
+    vector<string> listOfArgs;
     int numOfArgs;
 };
 
@@ -121,10 +121,10 @@ void* openServer(void* args){
 
 }
 
-void OpenDataServer::execute(list<string> list1) {
+int OpenDataServer::execute(vector<string> vector1) {
     struct ArgsStruct* argsStruct = new ArgsStruct();
-    argsStruct->listOfArgs =list1;
-    argsStruct->numOfArgs = list1.size();
+    argsStruct->listOfArgs =vector1;
+    argsStruct->numOfArgs = vector1.size();
     pthread_t trid;
     pthread_create(&trid, nullptr, openServer, argsStruct);
 }

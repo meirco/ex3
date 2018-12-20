@@ -7,12 +7,13 @@
 
 #include <list>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 class Command {
 public:
-    virtual void execute(list<string> list) =0;
+    virtual int execute(vector<string> vector1) =0;
 };
 
 //openDataServer

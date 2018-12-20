@@ -14,7 +14,7 @@ using namespace std;
 
 class OpenDataServer: public Command {
 public:
-    void execute(list<string> list) override;
+    int execute(vector<string> vector1) ;
 
 };
 

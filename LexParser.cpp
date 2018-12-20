@@ -8,6 +8,8 @@
 #include <iostream>
 #include <vector>
 #include <regex>
+#include "OpenDataServer.h";
+#include "Connect.h";
 
 using namespace std;
 
@@ -78,9 +80,9 @@ void lexParser:: parsering(vector<string> lexeredList) {
 
 
     int index = 0;
-    Command *c = commandMap.find(lexeredList.at(index));
+    Command *c = commandMap.at(lexeredList.at(index));
     if(c != NULL) {
-        index +=
+        index += c->execute(lexeredList); // getting the specific line.
 
     }
 
@@ -89,16 +91,9 @@ void lexParser:: parsering(vector<string> lexeredList) {
 }
 
 
-void lexParser::fillMap(map<string, Command*> map1) {
-    map1.insert("openDataServer", OpenDataServer);
-    map1.insert("connect", Connect);
-    map1.insert("print", Print);
-    map1.insert("sleep", Sleep);
-    map1.insert("var", Var);
-    map1.insert("bind", Bind);
-    map1.insert("=", Equal);
-    map1.insert("while", While);
-    map1.insert("if", If);
+void lexParser::fillMap(map<string, Command*> strToCommand) {
+    strToCommand.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
+
 
 
 
