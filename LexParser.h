@@ -8,6 +8,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <vector>
 #include "Command.h"
 
 using namespace std;
@@ -17,7 +18,7 @@ class lexParser {
 
 public:
     string str;
-    list<string>lexerList;
+    vector<string>lexerList;
     map<string, Command*> commandMap;
 
 
@@ -25,9 +26,9 @@ public:
 
     lexParser(string str);
 
-    list<string> start(string str);
+    vector<string> start(string str);
 
-    void parsering(list<string> list1);
+    void parsering(vector<string> list1);
 
     void fillMap(map<string, Command*> map1);
 

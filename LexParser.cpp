@@ -19,13 +19,12 @@ lexParser::lexParser(string str) {
     this->str = str;
     lexerList = start(str);
     parsering(lexerList);
-    ptrCommandMap = &
 
 }
 
 
 
-list<string> lexParser:: start (string str) {
+vector<string> lexParser:: start (string str) {
     string correctStr, command;
     regex reg("[A-Za-z]+");
     regex reg2("[A-Za-z0-9]*");
@@ -74,11 +73,15 @@ list<string> lexParser:: start (string str) {
 }
 
 
-void lexParser:: parsering(list<string> lexeredList) {
+void lexParser:: parsering(vector<string> lexeredList) {
     fillMap(commandMap);
 
+
     int index = 0;
-    Command* c = commandMap.find(lexeredList-)
+    Command *c = commandMap.find(lexeredList.at(index));
+    if(c != NULL) {
+        index +=
+
     }
 
 
