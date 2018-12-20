@@ -17,7 +17,6 @@ public:
 
 //openDataServer
 //connect
-//alt
 //var
 //bind there is a note at the targil instructions page 5 at the end.
 // =
