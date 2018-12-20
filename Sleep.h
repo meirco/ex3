@@ -10,6 +10,9 @@
 
 class Sleep : public Command {
 
+public:
+    int execute(vector<string> vector1) override;
+
 };
 
 
