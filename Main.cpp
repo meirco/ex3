@@ -7,8 +7,8 @@
 
 using namespace std;
 
-map<string, Command> commandMap;
-list<string> lexeredList;
+//map<string, Command*> commandMap;
+//list<string> lexeredList;
 
 int main() {
 

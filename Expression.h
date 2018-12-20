@@ -60,7 +60,7 @@ class Division : public BinaryExpression{
 public:
     virtual double calculate(){
         if(this->right==0){
-            return nullptr;
+            exit(0);
         }
         return this->left->calculate() / this->right->calculate();
     }

@@ -8,8 +8,9 @@
 #include <iostream>
 #include <vector>
 #include <regex>
-#include "OpenDataServer.h";
-#include "Connect.h";
+#include "OpenDataServer.h"
+#include "Connect.h"
+#include "Sleep.h"
 
 using namespace std;
 
@@ -76,7 +77,9 @@ vector<string> lexParser:: start (string str) {
 
 
 void lexParser:: parsering(vector<string> lexeredList) {
-    fillMap(commandMap);
+//    fillMap(commandMap);
+    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
+//    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
 
 
     int index = 0;
@@ -92,13 +95,8 @@ void lexParser:: parsering(vector<string> lexeredList) {
 
 
 void lexParser::fillMap(map<string, Command*> strToCommand) {
-    strToCommand.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
-
-
-
-
-
-
+    strToCommand.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
+    cout<< "sleep2";
 
 
 }

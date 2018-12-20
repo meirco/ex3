@@ -7,7 +7,8 @@
 #include "Sleep.h"
 
 int Sleep::execute(vector<string> vector1) {
-    sleep(stoi(vector1.at(1)));
+    int microSeconds= stoi(vector1.at(1));
+    usleep(microSeconds);
     int count = vector1.size();
     cout << "sleep" + count;
     return count;
