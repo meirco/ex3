@@ -11,6 +11,7 @@
 #include "OpenDataServer.h"
 #include "Connect.h"
 #include "Sleep.h"
+#include "Print.h"
 
 using namespace std;
 
@@ -28,10 +29,12 @@ lexParser::lexParser(string str) {
 
 
 vector<string> lexParser:: start (string str) {
+    int s; // help us to get all the operators.
+
     string correctStr, command;
     regex reg("[A-Za-z]+");
     regex reg2("[A-Za-z0-9]*");
-    regex reg3("[/^(\\+|-|\\*|\\/|=|>|<|>=|<=|.|,| - |&|\\||%|!|\\^|\\(|\\))$/]");
+    regex reg3("[/^(\\+|\\-|-|\\*|\\/|=|>|<|>=|<=|==|.|,|-|&|\\||%|!|\\^|\\(|\\))$/]");
     int i = 0;
     int j = 0;
     int count = 0;
@@ -47,6 +50,10 @@ vector<string> lexParser:: start (string str) {
                 || regex_match(str.substr(0, 1), reg3) != 0) {
                 break;
             } else {
+                string aa = str;
+                if(regex_match(aa.substr(0,1), reg3)) {
+                    lexerList.push_back(str.substr(0,1));
+                }
                 str.erase(0, 1);
             }
         }
@@ -70,8 +77,49 @@ vector<string> lexParser:: start (string str) {
                 str.erase(0, l);
                 break;
             }
+            // getting the operators.
+            else if(regex_match(str.substr(l,1), reg3)) {
+
+                // in case that the operator is in the beginning
+                if(l == 0) {
+                    // 2 operators at the beginning
+                    if(regex_match(str.substr(l+1, 1), reg3)) {
+                        lexerList.push_back(str.substr(0,2));
+                        str.erase(0,2);
+                        break;
+                    }
+                    else {
+                        // one operator
+                        lexerList.push_back(str.substr(0,1));
+                        str.erase(0,1);
+                        break;
+                    }
+                }
+
+
+                // if their is 2 operators.
+                if(regex_match(str.substr(l+1,1), reg3)) {
+                    l++;
+                    if(str.at(l-2) != ' ') {
+                        lexerList.push_back(str.substr(0, l-1)); // printing the string before the operator.
+                        str.erase(0, l-1);
+                        lexerList.push_back(str.substr(0,2));
+                        str.erase(0, 2);
+                        break;
+                    }
+                }
+                // if their is 1 operator. //TODO check if their is no whitespace after the operators.
+                else if(str.at(l-1) != ' ') {
+                    lexerList.push_back(str.substr(0, l)); // printing the string before the operator.
+                    str.erase(0, l);
+                    lexerList.push_back(str.substr(0,1));
+                    str.erase(0, 1);
+                    break;
+                }
+            }
         }
     }
+    cout<< "aaaa";
     return lexerList;
 }
 
@@ -79,6 +127,8 @@ vector<string> lexParser:: start (string str) {
 void lexParser:: parsering(vector<string> lexeredList) {
 //    fillMap(commandMap);
     commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
+    commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
+    
 //    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
 
 

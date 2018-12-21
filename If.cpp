@@ -3,3 +3,7 @@
 //
 
 #include "If.h"
+
+int If::execute(vector<string> vector1) {
+    return 0;
+}

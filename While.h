@@ -9,6 +9,8 @@
 #include "Command.h"
 
 class While : public Command {
+public:
+    int execute(vector<string> vector1) override;
 
 };
 

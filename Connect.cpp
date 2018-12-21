@@ -4,4 +4,6 @@
 
 #include "Connect.h"
 
-//Gil check 11:12
+int Connect::execute(vector<string> vector1) {
+    return 0;
+}
