@@ -4,18 +4,49 @@
 
 #include "DataBase.h"
 
+using namespace std;
 
 
 
 
+DataBase* DataBase :: instance = nullptr;
 
-
-const map<string, double> &DataBase::getSymboleTable() const {
-    return symboleTable;
+DataBase *DataBase::getInstance() {
+    if(!instance) {
+        instance = new DataBase;
+    }
+    return instance;
 }
 
-const map<string, string> &DataBase::getVarPath() const {
+
+
+
+// set one variable with its path.
+void DataBase:: setStringsForPath(string variable, string path) {
+    this->varPath[variable] = path;
+
+}
+// set one variable with its value.
+void DataBase:: setDoubleForVariable(string variable, double value) {
+    this->strDoubleMap[variable] = value;
+}
+
+
+
+
+// the map getters.
+ map<string, string> &DataBase::getVarPath()  {
     return varPath;
 }
+
+ map<string, double> &DataBase::getStrDoubleMap()  {
+    return strDoubleMap;
+}
+
+DataBase::DataBase() {}
+
+
+
+
 
 

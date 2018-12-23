@@ -3,8 +3,14 @@
 //
 
 #include "Var.h"
+#include "DataBase.h"
 
 int Var::execute(vector<string> vector1) {
+
+    DataBase *dataBase = DataBase::getInstance();
+
+
+
 
 
 }

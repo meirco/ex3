@@ -6,15 +6,14 @@
 #define EX3_OPENDATASERVER_H
 
 
-#include <string>
-#include <list>
+
 #include "Command.h"
 
 using namespace std;
 
 class OpenDataServer: public Command {
 public:
-    int execute(vector<string> vector1) ;
+    int execute(vector<string> vector1);
 
 };
 

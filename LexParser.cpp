@@ -128,9 +128,10 @@ vector<string> lexParser:: start (string str) {
 
 void lexParser:: parsering(vector<string> lexeredList) {
 //    fillMap(commandMap);
-    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
-    commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
-    commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));
+//    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
+//    commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
+//    commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));
+    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
     
 //    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
 

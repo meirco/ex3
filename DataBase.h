@@ -12,17 +12,30 @@ using namespace std;
 
 
 class DataBase {
-public:
-    DataBase();
-
-    const map<string, double> &getSymboleTable() const;
-
-    const map<string, string> &getVarPath() const;
 
 private:
 
-    map<string, double >symboleTable;
     map<string, string>varPath;
+
+    map<string, double>strDoubleMap;
+
+
+public:
+    DataBase();
+
+    static DataBase *instance;
+
+
+    static DataBase *getInstance();
+
+    void setStringsForPath(string variable, string path);
+
+    void setDoubleForVariable(string variable, double value);
+
+     map<string, string> &getVarPath() ;
+
+     map<string, double> &getStrDoubleMap() ;
+
 
 };
 
