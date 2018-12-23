@@ -38,6 +38,7 @@
 #include <cstdlib>
 #include <bits/socket_type.h>
 #include <bits/socket.h>
+#include <iostream>
 
 #include "OpenDataServer.h"
 
@@ -86,10 +87,11 @@ void* openServer(void* args){
     }
 
     /* Now start listening for the clients, here process will
-       * go in sleep mode and will wait for the incoming connection
+     * go in sleep mode and will wait for the incoming connection
     */
-
+    //server socket, max connected clients.
     listen(sockfd,5);
+    cout<< "server is listening" <<endl;
     clilen = sizeof(cli_addr);
 
     /* Accept actual connection from the client */

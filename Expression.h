@@ -30,7 +30,6 @@ protected:
 public:
     virtual double calculate() = 0;
     BinaryExpression(Expression *left, Expression *right) : left(left), right(right) {}
-
     BinaryExpression() {}
 };
 
@@ -60,7 +59,8 @@ class Division : public BinaryExpression{
 public:
     virtual double calculate(){
         if(this->right==0){
-            return nullptr;
+            perror("Can not divide by 0");
+            exit(1);
         }
         return this->left->calculate() / this->right->calculate();
     }
