@@ -1,69 +1,45 @@
-////
-//// Created by gil on 19/12/18.
-////
 //
-////struct
-////execute- get the list<string>
-////open the server and the socket -- bind, listen, accept
-////read the lines from the xml
-////separate with "," byh the XML format
-////save the read lines in a data base that we can pull by o(1).
+// Created by gil on 19/12/18.
 //
-////#include <stdio.h>
-////#include <stdlib.h>
-////#include <unistd.h>
-////#include <stdio.h>
-////#include <sys/socket.h>
-////#include <stdlib.h>
-////#include <netinet/in.h>
-////#include <string.h>
-////#include <netdb.h>
-////#include <unistd.h>
-////
-////#include <netinet/in.h>
-////#include <cstdio>
-////#include <cstdlib>
-////#include <unistd.h>
-////#include <cstring>
-//
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <netdb.h>
-//#include <unistd.h>
-//#include <netinet/in.h>
-//
-//#include <string.h>
-//#include <map>
-//#include <sys/socket.h>
-//#include <cstdlib>
-//#include <bits/socket_type.h>
-//#include <bits/socket.h>
-//
-//#include "OpenDataServer.h"
-//
-//using namespace std;
-//
-//struct ArgsStruct
-//{
-//    vector<string> listOfArgs;
-//    int numOfArgs;
-//};
-//
-//void* openServer(void* args){
-//
-//    struct ArgsStruct* argsStruct = (struct ArgsStruct*) args;
-//
-////    ArgsStruct * argsStruct = new ArgsStruct();
-////    argsStruct.listOfArgs = list1;
-////    argsStruct.numOfArgs = argc;
-//
+
+//TODO
+
+//read the lines from the xml
+//separate with "," byh the XML format
+//save the read lines in a data base that we can pull by o(1).
+//close the socket.
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <memory.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <iostream>
+#include <mutex>
+#include "OpenDataServer.h"
+
+struct Args{
+    int portNumber;
+    int numOfTimesToReadDataPerSecond;
+    int newsockfs;
+};
+
+
+
+void* ConnectServer(void* args){
+    int  n;
+    char buffer[1000];
+    struct Args* args1 = (struct Args*) args;
 //    int sockfd, newsockfd, portno, clilen;
-//    char buffer[256];
-//    struct sockaddr_in serv_addr, cli_addr;
 //    int  n;
+//    char buffer[1000];
+//    struct Args* args1 = (struct Args*) args;
+//    cout<< args1->portNumber << endl;
+//    cout<< args1->numOfTimesToReadDataPerSecond << endl;
+//    struct sockaddr_in serv_addr, cli_addr;
+////    mutex mtx;
 //
 //    /* First call to socket() function */
-//    //sockfd = socket(domain, type, protocol)
 //    sockfd = socket(AF_INET, SOCK_STREAM, 0);
 //
 //    if (sockfd < 0) {
@@ -73,9 +49,9 @@
 //
 //    /* Initialize socket structure */
 //    bzero((char *) &serv_addr, sizeof(serv_addr));
-//    portno = 5001;
+//    portno = args1->portNumber;
 //
-//    serv_addr.sin_family = AF_INET; //domain: AF_INET (IPv4 protocol)
+//    serv_addr.sin_family = AF_INET;
 //    serv_addr.sin_addr.s_addr = INADDR_ANY;
 //    serv_addr.sin_port = htons(portno);
 //
@@ -93,55 +69,57 @@
 //    clilen = sizeof(cli_addr);
 //
 //    /* Accept actual connection from the client */
+//    cout << "try to connect" << endl;
+//    scanf("%*d");
 //    newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
+//    cout << "Connected" << endl;
 //
 //    if (newsockfd < 0) {
 //        perror("ERROR on accept");
 //        exit(1);
 //    }
 //
-//    /* If connection is established then start communicating */
-//    bzero(buffer,256);
-//    n = read( newsockfd,buffer,255 );
-//
-//    if (n < 0) {
-//        perror("ERROR reading from socket");
-//        exit(1);
-//    }
-//
-//    printf("Here is the message: %s\n",buffer);
-//
-//    /* Write a response to the client */
-//    n = write(newsockfd,"I got your message",18);
-//
-//    if (n < 0) {
-//        perror("ERROR writing to socket");
-//        exit(1);
-//    }
-//
-//}
-//
-//int OpenDataServer::execute(vector<string> vector1) {
-//    struct ArgsStruct* argsStruct = new ArgsStruct();
-//    argsStruct->listOfArgs =vector1;
-//    argsStruct->numOfArgs = vector1.size();
-//    pthread_t trid;
-//    pthread_create(&trid, nullptr, openServer, argsStruct);
-//}
+////    int n, newsockfd;
+////    char buffer[1000];
+    /* If connection is established then start communicating */
+//    bool temp = true;
+    while(true) {
 
+//        mtx.lock();
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <memory.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include "OpenDataServer.h"
+        bzero(buffer, 1000);
+        n = read(args1->newsockfs, buffer, 999);
+
+        if (n < 0) {
+            perror("ERROR reading from socket");
+            exit(1);
+        }
+
+        printf("Here is the message: %s\n", buffer);
+
+        /* Write a response to the client */
+        n = write(args1->newsockfs, "I got your message", 18);
+
+        if (n < 0) {
+            perror("ERROR writing to socket");
+            exit(1);
+        }
+
+//        mtx.unlock();
+
+        sleep(1/(args1->numOfTimesToReadDataPerSecond)); // number of times to read the XML each second.
+    }
+
+    delete(args1);
+    return nullptr;
+
+}
 
 int OpenDataServer::execute(vector<string> vector1) {
     int sockfd, newsockfd, portno, clilen;
-    char buffer[256];
+//    char buffer[1000];
     struct sockaddr_in serv_addr, cli_addr;
-    int  n;
+//    int  n;
 
     /* First call to socket() function */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -153,7 +131,7 @@ int OpenDataServer::execute(vector<string> vector1) {
 
     /* Initialize socket structure */
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = 5400;
+    portno = stoi(vector1[1]);
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
@@ -173,31 +151,21 @@ int OpenDataServer::execute(vector<string> vector1) {
     clilen = sizeof(cli_addr);
 
     /* Accept actual connection from the client */
+    cout << "try to connect" << endl;
     newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
-
+    cout << "Connected" << endl;
     if (newsockfd < 0) {
         perror("ERROR on accept");
         exit(1);
     }
 
-    /* If connection is established then start communicating */
-    bzero(buffer,256);
-    n = read( newsockfd,buffer,255 );
+    struct Args* args1 = new Args();
+//    args1->portNumber = stoi(vector1[1]);
+    args1->numOfTimesToReadDataPerSecond=stoi(vector1[2]);
+    args1->newsockfs = newsockfd;
+    pthread_t trid; //Declare the thread.
+    pthread_create(&trid, nullptr, ConnectServer, args1);
+    pthread_join(trid, nullptr);
 
-    if (n < 0) {
-        perror("ERROR reading from socket");
-        exit(1);
-    }
-
-    printf("Here is the message: %s\n",buffer);
-
-    /* Write a response to the client */
-    n = write(newsockfd,"I got your message",18);
-
-    if (n < 0) {
-        perror("ERROR writing to socket");
-        exit(1);
-    }
-
-    return 0;
+//    return vector1.size(); //num of elements to move the index at the parser's list.
 }

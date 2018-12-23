@@ -2,6 +2,8 @@
 // Created by gil on 18/12/18.
 //
 
+//TODO - var and
+
 #include <iostream>
 #include "ShuntingYardAlgo.h"
 // CPP program to evaluate a given
@@ -23,19 +25,20 @@ void ShuntingYard::initializeMap() {
     this->precedences.insert(pair<char,int >('(',0));
     this->precedences.insert(pair<char,int >(')',0));
 }
-
-// Function to find precedence of
-// operators.
-double ShuntingYard:: precedenceOp(char op) { // TODO change signature.
-    if (op == '(' || op == ')')
-        return 0;
-    if (op == '+' || op == '-')
-        return 1;
-    if (op == '*' || op == '/')
-        return 2;
-    return 0;
-}
-
+//
+//// Function to find precedence of
+//// operators.
+//double ShuntingYard:: precedenceOp(char op) { // TODO change signature.
+//    if (op == '(' || op == ')')
+//        return 0;
+//    if (op == '+' || op == '-')
+//        return 1;
+//    if (op == '*' || op == '/')
+//        return 2;
+//    return 0;
+//}
+//
+//
 
 int ShuntingYard::precedence(char operation) {
     if (this->precedences.count(operation)) {
@@ -79,7 +82,7 @@ Expression *ShuntingYard::applyOp(Expression *left, Expression *right, char oper
 // Function that returns value of
 // expression after evaluation.
 Expression* ShuntingYard:: evaluate(string tokens) {
-    double i;
+    int i;
 
     // stack to store integer values.
     stack <Expression*> values;
@@ -118,16 +121,16 @@ Expression* ShuntingYard:: evaluate(string tokens) {
             // entire brace.
         else if (tokens[i] == ')') {
             while (!ops.empty() && ops.top() != '(') {
-                Expression* val2 = values.top();
+                Expression* right = values.top();
                 values.pop();
 
-                Expression* val1 = values.top();
+                Expression* left = values.top();
                 values.pop();
 
                 char op = ops.top();
                 ops.pop();
 
-                values.push(applyOp(val1, val2, op));
+                values.push(applyOp(left, right, op));
             }
 
             // pop opening brace.

@@ -14,7 +14,7 @@ int main() {
 
     string line, afterLex, conditionLines;
     ifstream myFile;
-    myFile.open("test.txt");
+    myFile.open("./test.txt");
     if(myFile.is_open()) {
         while(!myFile.eof()) {
             getline(myFile, line);
@@ -52,14 +52,6 @@ int main() {
     }
 
 
-
-
-
-
-
-
-
-
-
+//    pthread_exit(nullptr);
     return 0;
 }
