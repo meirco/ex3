@@ -37,12 +37,25 @@ public:
 class Plus : public BinaryExpression{
 
 public:
+    Plus(Expression *left, Expression *right) {
+        this->left = left;
+        this->right = right;
+    }
+
+public:
     virtual double calculate() {
+
         return this->left->calculate() + this->right->calculate();
     }
 };
 
 class Minus : public BinaryExpression{
+public:
+    Minus(Expression *left, Expression *right) : BinaryExpression(left, right) {
+        this->left = left;
+        this->right = right;
+    }
+
 public:
     virtual double calculate(){
         return this->left->calculate() - this->right->calculate();
@@ -51,6 +64,11 @@ public:
 
 class Multiplication : public BinaryExpression{
 public:
+    Multiplication(Expression *left, Expression *right) : BinaryExpression(left, right) {
+        this->left = left;
+        this->right = right;
+    }
+
     virtual double calculate(){
         return this->left->calculate() * this->right->calculate();
     }
@@ -58,6 +76,12 @@ public:
 
 class Division : public BinaryExpression{
 public:
+    Division(Expression *left, Expression *right) : BinaryExpression(left, right) {
+        this->left = left;
+        this->right = right;
+
+    }
+
     virtual double calculate(){
         if(this->right==0){
             exit(0);

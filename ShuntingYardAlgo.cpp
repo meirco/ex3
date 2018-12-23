@@ -26,15 +26,16 @@ void ShuntingYard::initializeMap() {
 
 // Function to find precedence of
 // operators.
-double precedence(char op) {
+double ShuntingYard:: precedenceOp(char op) { // TODO change signature.
     if (op == '(' || op == ')')
-        return 1.;
+        return 0;
     if (op == '+' || op == '-')
-        return 2.;
+        return 1;
     if (op == '*' || op == '/')
-        return 3;
+        return 2;
     return 0;
 }
+
 
 int ShuntingYard::precedence(char operation) {
     if (this->precedences.count(operation)) {
@@ -43,41 +44,45 @@ int ShuntingYard::precedence(char operation) {
     throw "invalid operation!";
 }
 
-// Function to perform arithmetic operations.
-Expression* ShuntingYard::applyOp(Expression *left, Expression *right, char operation) {
-//    BinaryExpression *binaryExpression;
+Expression *ShuntingYard::applyOp(Expression *left, Expression *right, char operation) {
+    //    BinaryExpression *binaryExpression;
 //    binaryExpression = new BinaryExpression(left, right);
 
     switch (operation) {
-        case '+':
-            Plus *plus = new  Plus;
+        case '+': {
+            Plus *plus = new Plus(left, right);
 //            Expression *plus = new Plus(left,right);
             //Plus plus1 = new Plus(left,right);
             plus->calculate();
             return plus;
-        case '-':
-            Minus *minus1 = new  Minus;
+        }
+        case '-': {
+            Minus *minus1 = new Minus(left, right);
             minus1->calculate();
             return minus1;
-        case '*':
-            Multiplication *multiplication = new  Multiplication;
+        }
+        case '*': {
+            Multiplication *multiplication = new Multiplication(left, right);
             multiplication->calculate();
             return multiplication;
-        case '/':
-            Division *division = new  Division;
+        }
+        case '/': {
+            Division *division = new Division(left, right);
             division->calculate();
-            return  division;
+            return division;
+        }
     }
 
 }
 
+
 // Function that returns value of
 // expression after evaluation.
-Expression* evaluate(string tokens) {
+Expression* ShuntingYard:: evaluate(string tokens) {
     double i;
 
     // stack to store integer values.
-    stack <int> values;
+    stack <Expression*> values;
 //        queue<Expression> queue1;
 
     // stack to store operators.
@@ -100,23 +105,23 @@ Expression* evaluate(string tokens) {
 
             // There may be more than one
             // digits in number.
-            while (i < tokens.length() &&
-                   isdigit(tokens[i])) {
+            while (i < tokens.length() && isdigit(tokens[i])) {
                 val = (val * 10) + (tokens[i] - '0');
                 i++;
             }
-
-            values.push(val);
+            i--;
+            Expression *num = new UnaryExpression(val);
+            values.push(num);
         }
 
-            // Closing brace encountered, solve
+       // Closing brace encountered, solve
             // entire brace.
         else if (tokens[i] == ')') {
             while (!ops.empty() && ops.top() != '(') {
-                int val2 = values.top();
+                Expression* val2 = values.top();
                 values.pop();
 
-                int val1 = values.top();
+                Expression* val1 = values.top();
                 values.pop();
 
                 char op = ops.top();
@@ -137,16 +142,16 @@ Expression* evaluate(string tokens) {
             // of 'ops' to top two elements in values stack.
             while (!ops.empty() && precedence(ops.top())
                                    >= precedence(tokens[i])) {
-                int val2 = values.top();
+                Expression* right = values.top();
                 values.pop();
 
-                int val1 = values.top();
+                Expression* left = values.top();
                 values.pop();
 
                 char op = ops.top();
                 ops.pop();
 
-                values.push(applyOp(val1, val2, op));
+                values.push(applyOp(left, right, op));
             }
 
             // Push current token to 'ops'.
@@ -158,23 +163,23 @@ Expression* evaluate(string tokens) {
     // point, apply remaining ops to remaining
     // values.
     while (!ops.empty()) {
-        int val2 = values.top();
+        Expression* right = values.top();
         values.pop();
 
-        int val1 = values.top();
+        Expression* left = values.top();
         values.pop();
 
         char op = ops.top();
         ops.pop();
 
-        values.push(applyOp(val1, val2, op));
+        values.push(applyOp(left, right, op));
     }
 
     // Top of 'values' contains result, return it.
     return values.top();
 }
 
-int main() {
+int ShuntingYard:: test() {
     cout << evaluate("10 + 2 * 6") << "\n";
     cout << evaluate("100 * 2 + 12") << "\n";
     cout << evaluate("100 * ( 2 + 12 )") << "\n";
@@ -182,3 +187,10 @@ int main() {
     return 0;
 }
 
+
+
+//// Function to perform arithmetic operations.
+//Expression* ShuntingYard::applyOp(Expression *left, Expression *right, char operation) {
+//
+//
+//}

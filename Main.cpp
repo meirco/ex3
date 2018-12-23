@@ -12,14 +12,35 @@ list<string> lexeredList;
 
 int main() {
 
-    string line, afterLex;
+    string line, afterLex, conditionLines;
     ifstream myFile;
     myFile.open("test.txt");
     if(myFile.is_open()) {
         while(!myFile.eof()) {
             getline(myFile, line);
+
             while(line.at(0) == ' ') {
                 line.erase(0,1);
+            }
+
+            int sulsulCount = 0;
+            if(line.substr(0,5) == "while" || (line.substr(0,2) == "if")) {
+                sulsulCount++;
+                // reading all the lines until "}".
+                while(getline(myFile, conditionLines)) {
+                    if(conditionLines.substr(0,5) == "while" ||(conditionLines.substr(0,2) == "if")) {
+                        sulsulCount++;
+                    }
+                    line+= "$"; // $ is symbol of new line.
+                    line += conditionLines;
+                    if(conditionLines.substr(0,1) == "}") {
+                        sulsulCount--;
+                        if(sulsulCount == 0) {
+                            break; // go out from while loop
+                        }
+
+                    }
+                }
             }
             lexParser *lexer1 = new lexParser(line);
 

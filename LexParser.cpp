@@ -12,6 +12,7 @@
 #include "Connect.h"
 #include "Sleep.h"
 #include "Print.h"
+#include "Var.h"
 
 using namespace std;
 
@@ -34,7 +35,8 @@ vector<string> lexParser:: start (string str) {
     string correctStr, command;
     regex reg("[A-Za-z]+");
     regex reg2("[A-Za-z0-9]*");
-    regex reg3("[/^(\\+|\\-|-|\\*|\\/|=|>|<|>=|<=|==|.|,|-|&|\\||%|!|\\^|\\(|\\))$/]");
+    regex reg3("[/^(\\+|\\-|-|\\*|\\/|}|{|=|>|<|>=|<=|==|.|,|-|&|\\||%|!|\\^|\\(|\\))$/]");
+    regex reg4("[0-9]+");
     int i = 0;
     int j = 0;
     int count = 0;
@@ -128,6 +130,7 @@ void lexParser:: parsering(vector<string> lexeredList) {
 //    fillMap(commandMap);
     commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
     commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
+    commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));
     
 //    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
 
