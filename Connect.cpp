@@ -16,6 +16,13 @@ int Connect::execute(vector<string> vector1) {
     int sockfd, portno, n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
+    char* hostIp;
+    for (int i = 1; i <vector1.size()-1 ; ++i) {
+        strcpy(hostIp,vector1[i].c_str());
+        cout<<hostIp<<endl;
+    }
+    //TODO- create a string of the IPaddress.
+
 
     char buffer[1000];
     cout<< "Connect Command args"  << endl;
