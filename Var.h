@@ -9,6 +9,9 @@
 #include "Command.h"
 
 class Var : public Command {
+
+    string bindStr = "bind";
+
 public:
     int execute(vector<string> vector1) override;
 
