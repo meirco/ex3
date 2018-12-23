@@ -45,7 +45,6 @@ int Var::execute(vector<string> vector1) {
 
     else {
 
-        cout << "aaa";
     }
 
 
