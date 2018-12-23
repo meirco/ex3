@@ -3,3 +3,7 @@
 //
 
 #include "While.h"
+
+int While::execute(vector<string> vector1) {
+    return 0;
+}

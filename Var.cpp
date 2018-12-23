@@ -3,3 +3,7 @@
 //
 
 #include "Var.h"
+
+int Var::execute(vector<string> vector1) {
+    return 0;
+}

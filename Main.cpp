@@ -7,7 +7,7 @@
 
 using namespace std;
 
-map<string, Command> commandMap;
+map<string, Command*> commandMap;
 list<string> lexeredList;
 
 int main() {
@@ -18,6 +18,9 @@ int main() {
     if(myFile.is_open()) {
         while(!myFile.eof()) {
             getline(myFile, line);
+            while(line.at(0) == ' ') {
+                line.erase(0,1);
+            }
             lexParser *lexer1 = new lexParser(line);
 
 
