@@ -7,10 +7,11 @@
 
 
 #include "Command.h"
+#include <map>
 
 class While : public Command {
 public:
-    int execute(vector<string> vector1) override;
+    int execute(map<int, string> map1 ) ;
 
 };
 
