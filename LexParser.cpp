@@ -146,11 +146,3 @@ void lexParser:: parsering(vector<string> lexeredList) {
 
 
 }
-
-
-void lexParser::fillMap(map<string, Command*> strToCommand) {
-    strToCommand.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
-    cout<< "sleep2";
-
-
-}

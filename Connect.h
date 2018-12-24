@@ -11,6 +11,7 @@
 class Connect : public Command {
 public:
     int execute(vector<string> vector1) override;
+    void enterChar();
 
 };
 

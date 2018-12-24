@@ -30,8 +30,6 @@ public:
 
     void parsering(vector<string> list1);
 
-    void fillMap(map<string, Command*> map1);
-
 };
 
 
