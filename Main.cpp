@@ -13,6 +13,8 @@ list<string> lexeredList;
 int main() {
 
     string line, afterLex, conditionLines;
+    // TODO tests
+    ShuntingYardAlgo yardAlgo;
     ifstream myFile;
     myFile.open("./test.txt");
     if(myFile.is_open()) {
