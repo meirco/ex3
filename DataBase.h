@@ -35,7 +35,9 @@ public:
 
     void setXmlMap(string variable, double value);
 
-     map<string, string> &getVarPath() ;
+    void initializeXmlMap();
+
+    map<string, string> &getVarPath() ;
 
      map<string, double> &getStrDoubleMap() ;
 

@@ -3,6 +3,7 @@
 //
 
 //TODO - need to destroy the struct after the while's break
+//TODO - need to get the vars from the xml.
 
 //read the lines from the xml
 //separate with "," byh the XML format
