@@ -4,7 +4,7 @@
 #include "map"
 #include "LexParser.h"
 #include "Command.h"
-#include "ShuntingYard.h"
+#include "DoubleFactory.h"
 
 using namespace std;
 
@@ -12,10 +12,12 @@ map<string, Command*> commandMap;
 list<string> lexeredList;
 
 int main() {
-
+    DataBase* dataBase = DataBase::getInstance();
+    dataBase->setDoubleForVariable("h0", 555);
+    DoubleFactory("h0/5*7773-me");
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     string line, afterLex, conditionLines;
     // TODO tests
-    ShuntingYard yardAlgo;
     ifstream myFile;
     myFile.open("./test.txt");
     if(myFile.is_open()) {

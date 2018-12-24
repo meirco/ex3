@@ -22,6 +22,8 @@ int ConditionParser::execute(vector<string> vector1) {
         }
     }
 
+    //TODO function calling
+
     /**
      * check what the specific command that we get and send to it the map with the commands.
      */
@@ -40,3 +42,5 @@ int ConditionParser::execute(vector<string> vector1) {
 
 
 }
+
+

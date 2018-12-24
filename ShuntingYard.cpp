@@ -10,9 +10,16 @@
 // expression where tokens are
 // separated by space.
 
-ShuntingYard::ShuntingYard() {
+
+ShuntingYard::ShuntingYard(string &inputString){
+    this->inputString = inputString;
     initializeMap();
 }
+
+//ShuntingYard::ShuntingYard() {
+//
+//    initializeMap();
+//}
 
 void ShuntingYard::initializeMap() {
     this->precedences.insert(pair<char,int>('/',2));
@@ -186,8 +193,6 @@ int ShuntingYard:: test() {
     cout << evaluate("100 * ( 2 + 12 ) / 14");
     return 0;
 }
-
-
 
 //// Function to perform arithmetic operations.
 //Expression* ShuntingYard::applyOp(Expression *left, Expression *right, char operation) {
