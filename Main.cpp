@@ -4,6 +4,7 @@
 #include "map"
 #include "LexParser.h"
 #include "Command.h"
+#include "ShuntingYard.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ int main() {
 
     string line, afterLex, conditionLines;
     // TODO tests
-    ShuntingYardAlgo yardAlgo;
+    ShuntingYard yardAlgo;
     ifstream myFile;
     myFile.open("./test.txt");
     if(myFile.is_open()) {

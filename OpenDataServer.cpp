@@ -20,7 +20,6 @@
 #include "OpenDataServer.h"
 
 struct Args{
-    int portNumber;
     int numOfTimesToReadDataPerSecond;
     int newsockfs;
 };
@@ -67,9 +66,7 @@ void* ConnectServer(void* args){
 
 int OpenDataServer::execute(vector<string> vector1) {
     int sockfd, newsockfd, portno, clilen;
-//    char buffer[1000];
     struct sockaddr_in serv_addr, cli_addr;
-//    int  n;
 
     /* First call to socket() function */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
