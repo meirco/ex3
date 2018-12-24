@@ -20,8 +20,6 @@ public:
 
     int precedence(char operation);
 
-    double precedenceOp(char op);
-
     virtual Expression* evaluate(string tokens);
 
     Expression* applyOp(Expression* left, Expression*  right, char operation);

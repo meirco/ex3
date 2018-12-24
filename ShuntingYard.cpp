@@ -5,13 +5,10 @@
 //TODO - var and
 
 #include <iostream>
-#include "ShuntingYardAlgo.h"
+#include "ShuntingYard.h"
 // CPP program to evaluate a given
 // expression where tokens are
 // separated by space.
-
-//TODO ( )  >= <= == != > <
-
 
 ShuntingYard::ShuntingYard() {
     initializeMap();
@@ -56,22 +53,22 @@ Expression *ShuntingYard::applyOp(Expression *left, Expression *right, char oper
             Plus *plus = new Plus(left, right);
 //            Expression *plus = new Plus(left,right);
             //Plus plus1 = new Plus(left,right);
-            plus->calculate();
+//            plus->calculate();
             return plus;
         }
         case '-': {
             Minus *minus1 = new Minus(left, right);
-            minus1->calculate();
+//            minus1->calculate();
             return minus1;
         }
         case '*': {
             Multiplication *multiplication = new Multiplication(left, right);
-            multiplication->calculate();
+//            multiplication->calculate();
             return multiplication;
         }
         case '/': {
             Division *division = new Division(left, right);
-            division->calculate();
+//            division->calculate();
             return division;
         }
     }

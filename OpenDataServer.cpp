@@ -39,6 +39,7 @@ void* ConnectServer(void* args){
         bzero(buffer, 1000);
         n = read(args1->newsockfs, buffer, 999);
 
+
         if (n < 0) {
             perror("ERROR reading from socket");
             exit(1);
