@@ -27,7 +27,7 @@ int Connect::execute(vector<string> vector1) {
     }
     cout<< hostIp<<endl;
 
-    enterChar();
+//    enterChar();
 
     char buffer[1000];
     cout<< "Connect Command args"  << endl;

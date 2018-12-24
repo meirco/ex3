@@ -44,7 +44,7 @@ void* ConnectServer(void* args){
             exit(1);
         }
 
-        printf("Here is the message: %s\n", buffer);
+//        printf("Here is the message: %s\n", buffer);
 
         /* Write a response to the client */
         n = write(args1->newsockfs, "I got your message", 18);
@@ -112,7 +112,7 @@ int OpenDataServer::execute(vector<string> vector1) {
     args1->newsockfs = newsockfd;
     pthread_t trid; //Declare the thread.
     pthread_create(&trid, nullptr, ConnectServer, args1);
-    pthread_join(trid, nullptr);
+//    pthread_join(trid, nullptr);
 
 //    return vector1.size(); //num of elements to move the index at the parser's list.
 }
