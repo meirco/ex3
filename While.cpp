@@ -3,7 +3,11 @@
 //
 
 #include "While.h"
+#include "DataBase.h"
 
-int While::execute(map<int, string> map1 ) {
+int While::execute(vector<string> vector1) {
+
+    DataBase* dataBase = DataBase::getInstance();
+
 
 }

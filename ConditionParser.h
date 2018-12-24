@@ -14,6 +14,8 @@ public:
 
     map<int, string> commandLineMap;
 
+    vector<string> commandLineVector;
+
     int execute(vector<string> vector1) override;
 
 };
