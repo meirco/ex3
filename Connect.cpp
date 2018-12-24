@@ -16,11 +16,12 @@ int Connect::execute(vector<string> vector1) {
     int sockfd, portno, n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
-    char* hostIp;
+    string hostIp;
     for (int i = 1; i <vector1.size()-1 ; ++i) {
-        strcpy(hostIp,vector1[i].c_str());
-        cout<<hostIp<<endl;
+        hostIp+= vector1[i];
     }
+    cout<< hostIp<<endl;
+
     //TODO- create a string of the IPaddress.
 
 
@@ -42,7 +43,7 @@ int Connect::execute(vector<string> vector1) {
         exit(1);
     }
 
-    server = gethostbyname("127.0.0.1");
+    server = gethostbyname(hostIp.c_str());
     cout<<"Creating a client's socket"<<endl;
     if (server == NULL) {
         fprintf(stderr,"ERROR, no such host\n");
