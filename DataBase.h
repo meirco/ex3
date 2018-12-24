@@ -19,12 +19,13 @@ private:
 
     map<string, double>strDoubleMap;
 
+    map<string,double > xmlMap;
+
 
 public:
     DataBase();
 
     static DataBase *instance;
-
 
     static DataBase *getInstance();
 
@@ -32,9 +33,15 @@ public:
 
     void setDoubleForVariable(string variable, double value);
 
+    void setXmlMap(string variable, double value);
+
      map<string, string> &getVarPath() ;
 
      map<string, double> &getStrDoubleMap() ;
+
+    map<string, double > &getXmlMap();
+
+
 
 
 };

@@ -12,6 +12,11 @@
 
 using namespace std;
 
+void Connect::enterChar() {
+    cout<< "Press enter after opening Simulator" << endl;
+    cin.ignore();
+}
+
 int Connect::execute(vector<string> vector1) {
     int sockfd, portno, n;
     struct sockaddr_in serv_addr;
@@ -22,8 +27,7 @@ int Connect::execute(vector<string> vector1) {
     }
     cout<< hostIp<<endl;
 
-    //TODO- create a string of the IPaddress.
-
+    enterChar();
 
     char buffer[1000];
     cout<< "Connect Command args"  << endl;

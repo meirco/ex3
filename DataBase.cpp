@@ -6,10 +6,6 @@
 
 using namespace std;
 
-// TODO    xml map <string, double>
-
-
-
 
 DataBase* DataBase :: instance = nullptr;
 
@@ -19,8 +15,6 @@ DataBase *DataBase::getInstance() {
     }
     return instance;
 }
-
-
 
 
 // set one variable with its path.
@@ -33,8 +27,9 @@ void DataBase:: setDoubleForVariable(string variable, double value) {
     this->strDoubleMap[variable] = value;
 }
 
-
-
+void DataBase::setXmlMap(string variable, double value) {
+    this->xmlMap[variable] =value;
+}
 
 // the map getters.
  map<string, string> &DataBase::getVarPath()  {
@@ -43,6 +38,10 @@ void DataBase:: setDoubleForVariable(string variable, double value) {
 
  map<string, double> &DataBase::getStrDoubleMap()  {
     return strDoubleMap;
+}
+
+map<string, double >& DataBase::getXmlMap() {
+    return xmlMap;
 }
 
 DataBase::DataBase() {}
