@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Var.h"
 #include "DataBase.h"
+#include "ShuntingYard.h"
 
 using namespace std;
 
@@ -17,6 +18,11 @@ int Var::execute(vector<string> vector1) {
 
     // vector iterator
     vector<string>:: iterator it;
+
+    string left = " ";
+    string right = " ";
+
+
 
     // if we found the "bind" str in the vector.
     if(find(vector1.begin(), vector1.end(), bindStr) != vector1.end()) {
@@ -44,7 +50,27 @@ int Var::execute(vector<string> vector1) {
     }
 
     else {
+        // we found the '=' index in the vector.
+        for (it = vector1.begin(); it != vector1.end(); it++) {
+            if(*it == "=") {
+                break;
+            }
+        }
+        long equalIndex = it -vector1.begin(); // the '=' index.
 
+        for (int i = 1; i < equalIndex ; i++) {
+            left += vector1[i];
+            left += " ";
+        }
+
+        for (int j = equalIndex + 1; j < vector1.size() ; j++) {
+            right += vector1[j];
+            right += " ";
+        }
+
+        cout<< "aaa";
+
+//        dataBase->setDoubleForVariable(left, ShuntingYard(right));
     }
 
 

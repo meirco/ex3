@@ -13,9 +13,13 @@ using namespace std;
 
 class ShuntingYard {
     map<char, int> precedences;
+    string inputString;
 public:
 
     ShuntingYard();
+
+    ShuntingYard(string &inputString);
+
     void initializeMap();
 
     int precedence(char operation);

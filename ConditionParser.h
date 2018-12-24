@@ -16,7 +16,12 @@ public:
 
     vector<string> commandLineVector;
 
+    enum Conditions{};
+
     int execute(vector<string> vector1) override;
+
+
+
 
 };
 
