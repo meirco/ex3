@@ -4,6 +4,6 @@
 
 #include "While.h"
 
-int While::execute(vector<string> vector1) {
-    return 0;
+int While::execute(map<int, string> map1 ) {
+
 }
