@@ -133,7 +133,7 @@ void lexParser:: parsering(vector<string> lexeredList) {
     int index = 0;
     DataBase* dataBase = DataBase::getInstance();
 
-//    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
+    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
 //    commandMap.insert(pair<string, Command*>("while", (Command*)new ConditionParser()));
 //    commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
     commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));

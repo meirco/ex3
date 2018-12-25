@@ -16,7 +16,8 @@ class OpenDataServer: public Command {
 public:
     int execute(vector<string> vector1);
 
-    DataBase* dataBase = dataBase->getInstance();
+    DataBase* dataBase = DataBase::getInstance();
+//    DataBase* dataBase = dataBase->getInstance();
 
 };
 

@@ -20,24 +20,150 @@
 #include <thread>
 #include "OpenDataServer.h"
 
+using namespace std;
+
+#define NUM_OF_ARGS 23
+
 struct Args{
     int numOfTimesToReadDataPerSecond;
     int newsockfs;
 };
 
-
-
-void* ConnectServer(void* args){
-    int  n;
+void* ConnectServer(void* args) {
+    int n;
     char buffer[1000];
-    struct Args* args1 = (struct Args*) args;
+    struct Args *args1 = (struct Args *) args;
+    DataBase *dataBase = DataBase::getInstance();
 
-    while(true) {
+    while (true) {
 
 //        mtx.lock();
 
         bzero(buffer, 1000);
-        n = read(args1->newsockfs, buffer, 999);
+        n = read(args1->newsockfs, buffer, 999); //read line from simulator to socket.
+
+        char* buffer2;
+        strcpy(buffer2 ,buffer); //backup for buffer.
+
+        /* now we take the buffer, saperate to tokens and insert them to vector*/
+        vector<double> lineArguments;
+
+        string delimiter = ">=";
+        const char * pch;
+        int pos = 0;
+        string token;
+
+        while ((pos = string(buffer).find(delimiter)) != std::string::npos) {
+            token = string(buffer).substr(0, pos);
+            lineArguments.push_back(stod(token));
+
+            string(buffer).erase(0, pos + delimiter.length());
+        }
+        cout<<lineArguments.size()<<endl;
+
+
+
+
+//        pch = strtok (buffer,",");
+//        while (pch != NULL)
+//        {
+//
+//            lineArguments.push_back(atof(pch));
+//            pch = strtok (NULL, ",");
+//        }
+//        cout<< lineArguments.size()<< endl;
+        char *str;
+
+        for (int i = 0; i < NUM_OF_ARGS; ++i) { //max args = 23
+
+
+
+            switch (i) {
+                case 0:
+                    str = strtok(buffer, ",");
+                    dataBase->setXmlMap("instrumentation/airspeed-indicator/indicated-speed-kt", lineArguments.at(0));
+                    break;
+                case 1:
+                    str = strtok(buffer, ",");
+                    dataBase->setXmlMap("instrumentation/altimeter/indicated-altitude-ft",lineArguments.at(0));
+                    str = strtok(NULL, ",");
+                    break;
+                case 2:
+                    str = strtok(buffer, ",");
+                    dataBase->setXmlMap("instrumentation/altimeter/indicated-altitude-ft",lineArguments.at(0));
+                    str = strtok(NULL, ",");
+                    break;
+                case 3:
+                    str = strtok(buffer, ",");
+                    dataBase->setXmlMap("instrumentation/attitude-indicator/indicated-pitch-deg",lineArguments.at(0));
+                    str = strtok(NULL, ",");
+                    break;
+                case 4:
+                    str = strtok(buffer, ",");
+                    dataBase->setXmlMap("instrumentation/attitude-indicator/indicated-roll-deg", lineArguments.at(0));
+                    break;
+                case 5:
+                    dataBase->setXmlMap("instrumentation/attitude-indicator/internal-pitch-deg", atof(str));
+                    break;
+                case 6:
+                    dataBase->setXmlMap("instrumentation/attitude-indicator/internal-roll-deg", atof(str));
+                    break;
+                case 7:
+                    dataBase->setXmlMap("instrumentation/encoder/indicated-altitude-ft", atof(str));
+                    break;
+                case 8:
+                    dataBase->setXmlMap("instrumentation/encoder/pressure-alt-ft", atof(str));
+                    break;
+                case 9:
+                    dataBase->setXmlMap("instrumentation/gps/indicated-altitude-ft", atof(str));
+                    break;
+                case 10:
+                    dataBase->setXmlMap("instrumentation/gps/indicated-ground-speed-kt", atof(str));
+                    break;
+                case 11:
+                    dataBase->setXmlMap("instrumentation/gps/indicated-vertical-speed", atof(str));
+                    break;
+                case 12:
+                    dataBase->setXmlMap("instrumentation/heading-indicator/indicated-heading-deg", atof(str));
+                    break;
+                case 13:
+                    dataBase->setXmlMap("instrumentation/magnetic-compass/indicated-heading-deg", atof(str));
+                    break;
+                case 14:
+                    dataBase->setXmlMap("instrumentation/slip-skid-ball/indicated-slip-skid", atof(str));
+                    break;
+                case 15:
+                    dataBase->setXmlMap("instrumentation/turn-indicator/indicated-turn-rate", atof(str));
+                    break;
+                case 16:
+                    dataBase->setXmlMap("instrumentation/vertical-speed-indicator/indicated-speed-fpm", atof(str));
+                    break;
+                case 17:
+                    dataBase->setXmlMap("controls/flight/aileron", atof(str));
+                    break;
+                case 18:
+                    dataBase->setXmlMap("controls/flight/elevator", atof(str));
+                    break;
+                case 19:
+                    dataBase->setXmlMap("controls/flight/rudder", atof(str));
+                    break;
+                case 20:
+                    dataBase->setXmlMap("controls/flight/flaps", atof(str));
+                    break;
+                case 21:
+                    dataBase->setXmlMap("controls/engines/engine/throttle", atof(str));
+                    break;
+                case 22:
+                    dataBase->setXmlMap("engines/engine/rpm", atof(str));
+                    break;
+            }
+        }
+
+        for(auto it = dataBase->getXmlMap().cbegin(); it != dataBase->getXmlMap().cend(); ++it)
+        {
+//            std::cout << it. << " " << it->second.first << " " << it->second.second << "\n";
+            cout <<it->first<< it->second<<endl;
+        }
 
 
         if (n < 0) {
@@ -45,7 +171,7 @@ void* ConnectServer(void* args){
             exit(1);
         }
 
-        printf("Here is the message: %s\n", buffer);
+        printf("Here is the message: %s\n", buffer2);
 
         /* Write a response to the client */
         n = write(args1->newsockfs, "I got your message", 18);
@@ -57,12 +183,11 @@ void* ConnectServer(void* args){
 
 //        mtx.unlock();
 
-        usleep(1/(args1->numOfTimesToReadDataPerSecond)); // number of times to read the XML each second.
+        usleep(1 / (args1->numOfTimesToReadDataPerSecond)); // number of times to read the XML each second.
     }
 
-    delete(args1);
+    delete (args1);
     return nullptr;
-
 }
 
 int OpenDataServer::execute(vector<string> vector1) {
@@ -111,11 +236,11 @@ int OpenDataServer::execute(vector<string> vector1) {
 //    args1->portNumber = stoi(vector1[1]);
     args1->numOfTimesToReadDataPerSecond=stoi(vector1[2]);
     args1->newsockfs = newsockfd;
-    thread serverThread(ConnectServer, args1);
-    serverThread.detach();
-//    pthread_t trid; //Declare the thread.
-//    pthread_create(&trid, nullptr, ConnectServer, args1);
-//    pthread_join(trid, nullptr);
+//    thread serverThread(ConnectServer, args1);
+//    serverThread.detach();
+    pthread_t trid; //Declare the thread.
+    pthread_create(&trid, nullptr, ConnectServer, args1);
+    pthread_join(trid, nullptr);
 
 //    return vector1.size(); //num of elements to move the index at the parser's list.
 }
