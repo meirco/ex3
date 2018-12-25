@@ -139,7 +139,7 @@ void lexParser:: parsering(vector<string> lexeredList) {
     commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));
 
 
-//    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
+    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
     
 
     // when we need to go to equal command.

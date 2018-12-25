@@ -31,7 +31,7 @@ struct Args{
 
 void* ConnectServer(void* args) {
     int n;
-    char buffer[1000];
+    char buffer[1000], buffer2[1000];
     struct Args *args1 = (struct Args *) args;
     DataBase *dataBase = DataBase::getInstance();
 
@@ -42,22 +42,20 @@ void* ConnectServer(void* args) {
         bzero(buffer, 1000);
         n = read(args1->newsockfs, buffer, 999); //read line from simulator to socket.
 
-        char* buffer2;
+
         strcpy(buffer2 ,buffer); //backup for buffer.
 
         /* now we take the buffer, saperate to tokens and insert them to vector*/
         vector<double> lineArguments;
-
-        string delimiter = ">=";
-        const char * pch;
-        int pos = 0;
-        string token;
-
-        while ((pos = string(buffer).find(delimiter)) != std::string::npos) {
-            token = string(buffer).substr(0, pos);
-            lineArguments.push_back(stod(token));
-
-            string(buffer).erase(0, pos + delimiter.length());
+        char* copyString;
+        copyString=strtok(buffer, ",");
+        while (copyString != NULL) {
+            lineArguments.push_back(stod(copyString));
+            copyString = strtok(NULL, ",");
+//            char* token = strtok(buffer, ",");
+//            lineArguments.push_back(stod(token));
+//
+//            string(buffer).erase(0, pos + delimiter.length());
         }
         cout<<lineArguments.size()<<endl;
 
@@ -85,22 +83,22 @@ void* ConnectServer(void* args) {
                     break;
                 case 1:
                     str = strtok(buffer, ",");
-                    dataBase->setXmlMap("instrumentation/altimeter/indicated-altitude-ft",lineArguments.at(0));
+                    dataBase->setXmlMap("instrumentation/altimeter/indicated-altitude-ft",lineArguments.at(1));
                     str = strtok(NULL, ",");
                     break;
                 case 2:
                     str = strtok(buffer, ",");
-                    dataBase->setXmlMap("instrumentation/altimeter/indicated-altitude-ft",lineArguments.at(0));
+                    dataBase->setXmlMap("instrumentation/altimeter/indicated-altitude-ft",lineArguments.at(2));
                     str = strtok(NULL, ",");
                     break;
                 case 3:
                     str = strtok(buffer, ",");
-                    dataBase->setXmlMap("instrumentation/attitude-indicator/indicated-pitch-deg",lineArguments.at(0));
+                    dataBase->setXmlMap("instrumentation/attitude-indicator/indicated-pitch-deg",lineArguments.at(3));
                     str = strtok(NULL, ",");
                     break;
                 case 4:
                     str = strtok(buffer, ",");
-                    dataBase->setXmlMap("instrumentation/attitude-indicator/indicated-roll-deg", lineArguments.at(0));
+                    dataBase->setXmlMap("instrumentation/attitude-indicator/indicated-roll-deg", lineArguments.at(4));
                     break;
                 case 5:
                     dataBase->setXmlMap("instrumentation/attitude-indicator/internal-pitch-deg", atof(str));
