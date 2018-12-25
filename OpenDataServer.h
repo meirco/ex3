@@ -13,11 +13,19 @@
 using namespace std;
 
 class OpenDataServer: public Command {
+
+
 public:
+    vector<string> xmlPath;
+
+    vector<double> xmlDoubles;
+
     int execute(vector<string> vector1);
 
     DataBase* dataBase = DataBase::getInstance();
 //    DataBase* dataBase = dataBase->getInstance();
+
+    void initializeXmlPath();
 
 };
 

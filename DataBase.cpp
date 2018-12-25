@@ -9,6 +9,10 @@ using namespace std;
 
 DataBase* DataBase :: instance = nullptr;
 
+
+DataBase::DataBase() {}
+
+
 DataBase *DataBase::getInstance() {
     if(!instance) {
         instance = new DataBase;
@@ -94,20 +98,65 @@ void DataBase::initializeXmlMap(){
     xmlMap.insert(pair<string, double >("controls/engines/engine/throttle", 0));
     xmlMap.insert(pair<string, double >("engines/engine/rpm", 0));
 
-//    int index = 0;
-//    double value = xmlMap.at(lexeredList.at(index));
-//    if(c != NULL) {
-//        index += c->execute(lexeredList); // getting the specific line.
-//
-//    }
+}
 
-
+void DataBase:: initializeXmlPath() {
+    xmlPath.push_back("instrumentation/airspeed-indicator/indicated-speed-kt");
+    xmlPath.push_back("instrumentation/altimeter/indicated-altitude-ft");
+    xmlPath.push_back("instrumentation/altimeter/indicated-altitude-ft");
+    xmlPath.push_back("instrumentation/attitude-indicator/indicated-pitch-deg");
+    xmlPath.push_back("instrumentation/attitude-indicator/indicated-roll-deg");
+    xmlPath.push_back("instrumentation/attitude-indicator/internal-pitch-deg");
+    xmlPath.push_back("instrumentation/attitude-indicator/internal-roll-deg");
+    xmlPath.push_back("instrumentation/encoder/indicated-altitude-ft");
+    xmlPath.push_back("instrumentation/encoder/pressure-alt-ft");
+    xmlPath.push_back("instrumentation/gps/indicated-altitude-ft");
+    xmlPath.push_back("instrumentation/gps/indicated-ground-speed-kt");
+    xmlPath.push_back("instrumentation/gps/indicated-vertical-speed");
+    xmlPath.push_back("instrumentation/heading-indicator/indicated-heading-deg");
+    xmlPath.push_back("instrumentation/magnetic-compass/indicated-heading-deg");
+    xmlPath.push_back("instrumentation/slip-skid-ball/indicated-slip-skid");
+    xmlPath.push_back("instrumentation/turn-indicator/indicated-turn-rate");
+    xmlPath.push_back("instrumentation/vertical-speed-indicator/indicated-speed-fpm");
+    xmlPath.push_back("controls/flight/aileron");
+    xmlPath.push_back("controls/flight/elevator");
+    xmlPath.push_back("controls/flight/rudder");
+    xmlPath.push_back("controls/flight/flaps");
+    xmlPath.push_back("controls/engines/engine/throttle");
+    xmlPath.push_back("engines/engine/rpm");
 
 }
 
 
+//void DataBase::initializeXmlDouble()  {
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//    xmlPath.push_back(0);
+//}
 
-DataBase::DataBase() {}
+
+
+
 
 
 

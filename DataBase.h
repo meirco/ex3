@@ -22,12 +22,18 @@ private:
     map<string,double > xmlMap;
 
 
+
+
 public:
     DataBase();
 
     static DataBase *instance;
 
     static DataBase *getInstance();
+
+    vector<string> xmlPath;
+
+    vector<double> xmlDoubles;
 
     void setStringsForPath(string variable, string path);
 
@@ -37,6 +43,10 @@ public:
 
     void initializeXmlMap();
 
+    void initializeXmlPath();
+
+    void initializeXmlDouble();
+
     map<string, string> &getVarPath() ;
 
      map<string, double> &getStrDoubleMap() ;
@@ -44,7 +54,13 @@ public:
     map<string, double > &getXmlMap();
 
 
+     vector<string> getXmlPath() ;
 
+     vector<double> getXmlDoubles() ;
+
+    void setXmlPath( vector<string> &xmlPath);
+
+    void setXmlDoubles( vector<double> &xmlDoubles);
 
 };
 
