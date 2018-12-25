@@ -130,11 +130,8 @@ vector<string> lexParser:: start (string str) {
 
 void lexParser:: parsering(vector<string> lexeredList) {
 
+    int index = 0;
     DataBase* dataBase = DataBase::getInstance();
-    if(dataBase->getStrDoubleMap().find(lexeredList[0]) != dataBase->getStrDoubleMap().end()) {
-        commandMap.insert(pair<string, Command*>("equal", (Command*)new Equal()));
-    }
-
 
 //    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
 //    commandMap.insert(pair<string, Command*>("while", (Command*)new ConditionParser()));
@@ -145,11 +142,15 @@ void lexParser:: parsering(vector<string> lexeredList) {
 //    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
 
     // when we need to go to equal command.
+    if(dataBase->getStrDoubleMap().find(lexeredList[0]) != dataBase->getStrDoubleMap().end()) {
+        commandMap.insert(pair<string, Command*>("equal", (Command*)new Equal()));
+
+    }
 
 
 
-    int index = 0;
-    Command *c = commandMap.at(lexeredList.at(index));
+
+    Command *c = commandMap.at(commandMap.begin()->first);
     if(c != NULL) {
         index += c->execute(lexeredList); // getting the specific line.
 
