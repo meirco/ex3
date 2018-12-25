@@ -5,6 +5,7 @@
 #include "LexParser.h"
 #include "Command.h"
 #include "DoubleFactory.h"
+#include "ShuntingYard.h"
 
 using namespace std;
 
@@ -14,7 +15,11 @@ list<string> lexeredList;
 int main() {
     DataBase* dataBase = DataBase::getInstance();
     dataBase->setDoubleForVariable("h0", 555);
-    DoubleFactory("h0/5*7773-me");
+//    DoubleFactory("h0/5*7773-me");
+//    ShuntingYard shuntingYard("5+3");
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     string line, afterLex, conditionLines;
     // TODO tests

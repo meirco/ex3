@@ -13,9 +13,9 @@ using namespace std;
 
 class DoubleFactory {
 public:
-    DoubleFactory( string str);
+    DoubleFactory();
 
-    double convertToDouble(string str);
+    string convertToDouble(string str);
 
     DataBase* dataBase = DataBase:: getInstance();
 

@@ -14,6 +14,8 @@
 #include "Print.h"
 #include "Var.h"
 #include "ConditionParser.h"
+#include "DataBase.h"
+#include "Equal.h"
 
 using namespace std;
 
@@ -127,14 +129,23 @@ vector<string> lexParser:: start (string str) {
 
 
 void lexParser:: parsering(vector<string> lexeredList) {
-    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
-    commandMap.insert(pair<string, Command*>("while", (Command*)new ConditionParser()));
-    commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
+
+    DataBase* dataBase = DataBase::getInstance();
+    if(dataBase->getStrDoubleMap().find(lexeredList[0]) != dataBase->getStrDoubleMap().end()) {
+        commandMap.insert(pair<string, Command*>("equal", (Command*)new Equal()));
+    }
+
+
+//    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
+//    commandMap.insert(pair<string, Command*>("while", (Command*)new ConditionParser()));
+//    commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
     commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));
-    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
-    commandMap.insert(pair<string, Command*>("connect", (Command*)new Connect()));
+//    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
     
 //    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
+
+    // when we need to go to equal command.
+
 
 
     int index = 0;
