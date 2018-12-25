@@ -50,6 +50,7 @@ int Var::execute(vector<string> vector1) {
 
     }
 
+    // not "bind" just '='
     else {
         // we found the '=' index in the vector.
         for (it = vector1.begin(); it != vector1.end(); it++) {
@@ -78,12 +79,22 @@ int Var::execute(vector<string> vector1) {
         DoubleFactory doubleFactory;
         string extractFromVar = doubleFactory.convertToDouble(right);
 
+        if(extractFromVar.at(0) == ' ') {
+            if(extractFromVar.at(1) == '-') {
+                extractFromVar.replace(extractFromVar.find(' '), 1, "0");
+            }
+        }
 
 
         Expression* expressionPtr = shuntingYard.evaluate(extractFromVar);
         double newValue = expressionPtr->calculate();
+        string var = vector1[1];
 
         delete expressionPtr; // TODO check leak
+
+        dataBase->setDoubleForVariable(var, newValue);
+
+        return newValue; // TODO check if needed.
 
 
     }

@@ -5,6 +5,7 @@
 //TODO - var and
 
 #include <iostream>
+#include <regex>
 #include "ShuntingYard.h"
 // CPP program to evaluate a given
 // expression where tokens are
@@ -83,6 +84,17 @@ Expression *ShuntingYard::applyOp(Expression *left, Expression *right, char oper
 
 }
 
+int ShuntingYard:: checkNeg(string token) {
+    int j, k = 0;
+    int flag = 0; // the sign flag.
+    regex reg3("[/^(\\+|\\-|-|\\*|\\/|||||,|-|||!|||))$/]");
+    string check = " ";
+
+        if(token.at(1) == '-') {
+            flag = 1;
+        }
+    return flag;
+}
 
 // Function that returns value of
 // expression after evaluation.
@@ -97,6 +109,7 @@ Expression* ShuntingYard:: evaluate(string tokens) {
     stack<char> ops;
 
     for (i = 0; i < tokens.length(); i++) {
+
 
         // Current token is a whitespace, skip it.
         if (tokens[i] == ' ')
@@ -119,6 +132,7 @@ Expression* ShuntingYard:: evaluate(string tokens) {
             }
             i--;
             Expression *num = new UnaryExpression(val);
+
             values.push(num);
         }
 
@@ -189,7 +203,7 @@ Expression* ShuntingYard:: evaluate(string tokens) {
 }
 
 int ShuntingYard:: test() {
-//    cout << evaluate("10 + 2 * 6") << "\n";
+    cout << evaluate("10 + 2 * 6") << "\n";
     cout << evaluate("100 * 2 + 12") << "\n";
     cout << evaluate("100 * ( 2 + 12 )") << "\n";
     cout << evaluate("100 * ( 2 + 12 ) / 14");

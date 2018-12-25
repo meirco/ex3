@@ -3,3 +3,9 @@
 //
 
 #include "Bind.h"
+
+int Bind::execute(vector<string> vector1) {
+
+
+
+}

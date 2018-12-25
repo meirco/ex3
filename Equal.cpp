@@ -10,6 +10,8 @@
 
 int Equal::execute(vector<string> vector1) {
 
+    int flag = 0;
+
     // vector iterator
     vector<string>:: iterator it;
 
@@ -47,8 +49,20 @@ int Equal::execute(vector<string> vector1) {
 
     string strDoubleVar = doubleFactory.convertToDouble(right);
 
+    if(strDoubleVar.at(0) == ' ') {
+        if(strDoubleVar.at(1) == '-') {
+            strDoubleVar.replace(strDoubleVar.find(' '), 1, "0");
+        }
+    }
+
+
     Expression* expression = shuntingYard.evaluate(strDoubleVar);
     double valueNew = expression->calculate();
+    string var = vector1[0];
 
     delete expression;
+
+    dataBase->setDoubleForVariable(var, valueNew);
+
+    return valueNew; // maybe not needed.TODO check it.
 }

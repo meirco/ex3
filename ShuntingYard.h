@@ -31,6 +31,8 @@ public:
 
     int test();
 
+    int checkNeg(string token);
+
 
 };
 
