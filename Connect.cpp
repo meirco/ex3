@@ -25,9 +25,11 @@ struct Args{
 void* ConnectClient(void* args){
     int  n;
     char buffer[1000];
-    struct Args* args1 = (struct Args*) args;
+    struct Args *args1 = (struct Args*) args;
     int sockfd = args1->sockfd;
 
+
+    cout<<"connection happend" << endl;
     while(true) {
 
 //        mtx.lock();
@@ -68,7 +70,7 @@ void* ConnectClient(void* args){
 }
 
 int Connect::execute(vector<string> vector1) {
-    int sockfd, portno, n;
+    int sockfd, portno;
     struct sockaddr_in serv_addr;
     struct hostent *server;
     string hostIp;
@@ -77,13 +79,11 @@ int Connect::execute(vector<string> vector1) {
     }
     cout<< hostIp<<endl;
 
-//    enterChar();
+    enterChar();
 
     char buffer[1000];
-    cout<< "Connect Command args"  << endl;
 
     if (vector1.size() < 9) {
-//        fprintf(stderr,"usage %s hostname port\n", hostIp);
         perror("not enough arguments");
         exit(0);
     }
@@ -116,11 +116,14 @@ int Connect::execute(vector<string> vector1) {
         exit(1);
     }
 
-    cout<< "Connect Command args"  << endl;
+    cout<< "Now try to make Client's thread"  << endl;
     struct Args* args1 = new Args();
     args1->sockfd = sockfd;
-    thread clientThred(ConnectClient,args1);
-    clientThred.detach();
+    pthread_t trid; //Declare the thread.
+    pthread_create(&trid, nullptr, ConnectClient, args1);
+//    pthread_join(trid, nullptr);
+//    thread clientThred(ConnectClient,args1);
+//    clientThred.detach();
 
 //    /* Now ask for a message from the user, this message
 //       * will be read by server

@@ -149,8 +149,6 @@ void lexParser:: parsering(vector<string> lexeredList) {
     }
 
 
-
-
     Command *c = commandMap.at(lexeredList[0]);
     if(c != NULL) {
         index += c->execute(lexeredList); // getting the specific line.
