@@ -118,7 +118,7 @@ int Connect::execute(vector<string> vector1) {
         exit(1);
     }
 
-    cout<< "Now try to open the Client's thread"  << endl;
+    cout<< "Connect Command args"  << endl;
     struct Args* args1 = new Args();
     args1->sockfd = sockfd;
     thread clientThred(ConnectClient,args1);
