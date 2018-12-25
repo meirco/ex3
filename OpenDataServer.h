@@ -8,12 +8,15 @@
 
 
 #include "Command.h"
+#include "DataBase.h"
 
 using namespace std;
 
 class OpenDataServer: public Command {
 public:
     int execute(vector<string> vector1);
+
+    DataBase* dataBase = dataBase->getInstance();
 
 };
 
