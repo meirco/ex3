@@ -22,8 +22,6 @@ struct Args{
     int sockfd;
 };
 
-
-
 void* ConnectClient(void* args){
     int  n;
     char buffer[1000];

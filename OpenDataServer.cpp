@@ -31,13 +31,14 @@ struct Args{
 
 void* ConnectServer(void* args) {
     int n;
+    mutex mtx;
     char buffer[1000], buffer2[1000];
     struct Args *args1 = (struct Args *) args;
     DataBase *dataBase = DataBase::getInstance();
 
-    while (true) {
+    while (true) { //Global flag = true;
 
-//        mtx.lock();
+        mtx.lock();
 
         bzero(buffer, 1000);
         n = read(args1->newsockfs, buffer, 999); //read line from simulator to socket.
@@ -48,29 +49,11 @@ void* ConnectServer(void* args) {
         /* now we take the buffer, saperate to tokens and insert them to vector*/
         vector<double> lineArguments;
         char* copyString;
-        copyString=strtok(buffer, ",");
+        copyString=strtok(buffer, ","); //from the net whole while loop
         while (copyString != NULL) {
-            lineArguments.push_back(stod(copyString));
-            copyString = strtok(NULL, ",");
-//            char* token = strtok(buffer, ",");
-//            lineArguments.push_back(stod(token));
-//
-//            string(buffer).erase(0, pos + delimiter.length());
+            lineArguments.push_back(stod(copyString)); //insert current token to vector
+            copyString = strtok(NULL, ","); //Yani i++ next token
         }
-        cout<<lineArguments.size()<<endl;
-
-
-
-
-//        pch = strtok (buffer,",");
-//        while (pch != NULL)
-//        {
-//
-//            lineArguments.push_back(atof(pch));
-//            pch = strtok (NULL, ",");
-//        }
-//        cout<< lineArguments.size()<< endl;
-        char *str;
 
         for (int i = 0; i < NUM_OF_ARGS; ++i) { //max args = 23
 
@@ -78,88 +61,81 @@ void* ConnectServer(void* args) {
 
             switch (i) {
                 case 0:
-                    str = strtok(buffer, ",");
                     dataBase->setXmlMap("instrumentation/airspeed-indicator/indicated-speed-kt", lineArguments.at(0));
                     break;
                 case 1:
-                    str = strtok(buffer, ",");
                     dataBase->setXmlMap("instrumentation/altimeter/indicated-altitude-ft",lineArguments.at(1));
-                    str = strtok(NULL, ",");
                     break;
                 case 2:
-                    str = strtok(buffer, ",");
                     dataBase->setXmlMap("instrumentation/altimeter/indicated-altitude-ft",lineArguments.at(2));
-                    str = strtok(NULL, ",");
                     break;
                 case 3:
-                    str = strtok(buffer, ",");
                     dataBase->setXmlMap("instrumentation/attitude-indicator/indicated-pitch-deg",lineArguments.at(3));
-                    str = strtok(NULL, ",");
                     break;
                 case 4:
-                    str = strtok(buffer, ",");
                     dataBase->setXmlMap("instrumentation/attitude-indicator/indicated-roll-deg", lineArguments.at(4));
                     break;
                 case 5:
-                    dataBase->setXmlMap("instrumentation/attitude-indicator/internal-pitch-deg", atof(str));
+                    dataBase->setXmlMap("instrumentation/attitude-indicator/internal-pitch-deg", lineArguments.at(5));
                     break;
                 case 6:
-                    dataBase->setXmlMap("instrumentation/attitude-indicator/internal-roll-deg", atof(str));
+                    dataBase->setXmlMap("instrumentation/attitude-indicator/internal-roll-deg", lineArguments.at(6));
                     break;
                 case 7:
-                    dataBase->setXmlMap("instrumentation/encoder/indicated-altitude-ft", atof(str));
+                    dataBase->setXmlMap("instrumentation/encoder/indicated-altitude-ft", lineArguments.at(7));
                     break;
                 case 8:
-                    dataBase->setXmlMap("instrumentation/encoder/pressure-alt-ft", atof(str));
+                    dataBase->setXmlMap("instrumentation/encoder/pressure-alt-ft", lineArguments.at(8));
                     break;
                 case 9:
-                    dataBase->setXmlMap("instrumentation/gps/indicated-altitude-ft", atof(str));
+                    dataBase->setXmlMap("instrumentation/gps/indicated-altitude-ft", lineArguments.at(9));
                     break;
                 case 10:
-                    dataBase->setXmlMap("instrumentation/gps/indicated-ground-speed-kt", atof(str));
+                    dataBase->setXmlMap("instrumentation/gps/indicated-ground-speed-kt", lineArguments.at(10));
                     break;
                 case 11:
-                    dataBase->setXmlMap("instrumentation/gps/indicated-vertical-speed", atof(str));
+                    dataBase->setXmlMap("instrumentation/gps/indicated-vertical-speed", lineArguments.at(11));
                     break;
                 case 12:
-                    dataBase->setXmlMap("instrumentation/heading-indicator/indicated-heading-deg", atof(str));
+                    dataBase->setXmlMap("instrumentation/heading-indicator/indicated-heading-deg", lineArguments.at(12));
                     break;
                 case 13:
-                    dataBase->setXmlMap("instrumentation/magnetic-compass/indicated-heading-deg", atof(str));
+                    dataBase->setXmlMap("instrumentation/magnetic-compass/indicated-heading-deg", lineArguments.at(13));
                     break;
                 case 14:
-                    dataBase->setXmlMap("instrumentation/slip-skid-ball/indicated-slip-skid", atof(str));
+                    dataBase->setXmlMap("instrumentation/slip-skid-ball/indicated-slip-skid", lineArguments.at(14));
                     break;
                 case 15:
-                    dataBase->setXmlMap("instrumentation/turn-indicator/indicated-turn-rate", atof(str));
+                    dataBase->setXmlMap("instrumentation/turn-indicator/indicated-turn-rate", lineArguments.at(15));
                     break;
                 case 16:
-                    dataBase->setXmlMap("instrumentation/vertical-speed-indicator/indicated-speed-fpm", atof(str));
+                    dataBase->setXmlMap("instrumentation/vertical-speed-indicator/indicated-speed-fpm", lineArguments.at(16));
                     break;
                 case 17:
-                    dataBase->setXmlMap("controls/flight/aileron", atof(str));
+                    dataBase->setXmlMap("controls/flight/aileron", lineArguments.at(17));
                     break;
                 case 18:
-                    dataBase->setXmlMap("controls/flight/elevator", atof(str));
+                    dataBase->setXmlMap("controls/flight/elevator", lineArguments.at(18));
                     break;
                 case 19:
-                    dataBase->setXmlMap("controls/flight/rudder", atof(str));
+                    dataBase->setXmlMap("controls/flight/rudder", lineArguments.at(19));
                     break;
                 case 20:
-                    dataBase->setXmlMap("controls/flight/flaps", atof(str));
+                    dataBase->setXmlMap("controls/flight/flaps", lineArguments.at(20));
                     break;
                 case 21:
-                    dataBase->setXmlMap("controls/engines/engine/throttle", atof(str));
+                    dataBase->setXmlMap("controls/engines/engine/throttle",  lineArguments.at(21));
                     break;
                 case 22:
-                    dataBase->setXmlMap("engines/engine/rpm", atof(str));
+                    dataBase->setXmlMap("engines/engine/rpm", lineArguments.at(22));
+                    break;
+                default:
                     break;
             }
         }
-
+        //check what we have in the XmlMap:
         for(auto it = dataBase->getXmlMap().cbegin(); it != dataBase->getXmlMap().cend(); ++it)
         {
-//            std::cout << it. << " " << it->second.first << " " << it->second.second << "\n";
             cout <<it->first<< it->second<<endl;
         }
 
@@ -169,7 +145,7 @@ void* ConnectServer(void* args) {
             exit(1);
         }
 
-        printf("Here is the message: %s\n", buffer2);
+        printf("Here is the message: %s\n", buffer2); //print the whole line from the simulator.
 
         /* Write a response to the client */
         n = write(args1->newsockfs, "I got your message", 18);
@@ -179,7 +155,7 @@ void* ConnectServer(void* args) {
             exit(1);
         }
 
-//        mtx.unlock();
+        mtx.unlock(); //finish critic code = unlock mtx.
 
         usleep(1 / (args1->numOfTimesToReadDataPerSecond)); // number of times to read the XML each second.
     }
