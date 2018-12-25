@@ -14,11 +14,12 @@ using namespace std;
 class ShuntingYard {
     map<char, int> precedences;
     string inputString;
+
 public:
+//    ShuntingYard(string inputString);
 
     ShuntingYard();
 
-    ShuntingYard(string &inputString);
 
     void initializeMap();
 

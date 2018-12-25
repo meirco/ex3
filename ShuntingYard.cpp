@@ -11,10 +11,11 @@
 // separated by space.
 
 
-ShuntingYard::ShuntingYard(string &inputString){
-    this->inputString = inputString;
+ShuntingYard::ShuntingYard(){
     initializeMap();
+
 }
+
 
 //ShuntingYard::ShuntingYard() {
 //
@@ -183,16 +184,19 @@ Expression* ShuntingYard:: evaluate(string tokens) {
     }
 
     // Top of 'values' contains result, return it.
+
     return values.top();
 }
 
 int ShuntingYard:: test() {
-    cout << evaluate("10 + 2 * 6") << "\n";
+//    cout << evaluate("10 + 2 * 6") << "\n";
     cout << evaluate("100 * 2 + 12") << "\n";
     cout << evaluate("100 * ( 2 + 12 )") << "\n";
     cout << evaluate("100 * ( 2 + 12 ) / 14");
     return 0;
 }
+
+
 
 //// Function to perform arithmetic operations.
 //Expression* ShuntingYard::applyOp(Expression *left, Expression *right, char operation) {

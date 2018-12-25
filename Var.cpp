@@ -7,6 +7,7 @@
 #include "Var.h"
 #include "DataBase.h"
 #include "ShuntingYard.h"
+#include "DoubleFactory.h"
 
 using namespace std;
 
@@ -65,12 +66,26 @@ int Var::execute(vector<string> vector1) {
 
         for (int j = equalIndex + 1; j < vector1.size() ; j++) {
             right += vector1[j];
-            right += " ";
+//            right += " ";
         }
 
-        cout<< "aaa";
+        /**
+         * making all string as double string and send it to shunting.
+         */
+        // declare on shunting.
+        ShuntingYard shuntingYard;
 
-//        dataBase->setDoubleForVariable(left, ShuntingYard(right));
+        DoubleFactory doubleFactory;
+        string extractFromVar = doubleFactory.convertToDouble(right);
+
+
+
+        Expression* expressionPtr = shuntingYard.evaluate(extractFromVar);
+        double newValue = expressionPtr->calculate();
+
+        delete expressionPtr; // TODO check leak
+
+
     }
 
 
