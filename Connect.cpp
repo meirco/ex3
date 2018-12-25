@@ -8,6 +8,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <iostream>
+#include <thread>
 #include "Connect.h"
 
 using namespace std;
@@ -15,6 +16,57 @@ using namespace std;
 void Connect::enterChar() {
     cout<< "Press enter after opening Simulator" << endl;
     cin.ignore();
+}
+
+struct Args{
+    int sockfd;
+};
+
+
+
+void* ConnectClient(void* args){
+    int  n;
+    char buffer[1000];
+    struct Args* args1 = (struct Args*) args;
+    int sockfd = args1->sockfd;
+
+    while(true) {
+
+//        mtx.lock();
+
+        /* Now ask for a message from the user, this message
+       * will be read by server
+    */
+        printf("Please enter the message: ");
+        bzero(buffer,1000);
+        fgets(buffer,999,stdin);
+
+        /* Send message to the server */
+        n = write(sockfd, buffer, strlen(buffer));
+
+        if (n < 0) {
+            perror("ERROR writing to socket");
+            exit(1);
+        }
+
+        /* Now read server response */
+        bzero(buffer,1000);
+        n = read(sockfd, buffer, 999);
+
+        if (n < 0) {
+            perror("ERROR reading from socket");
+            exit(1);
+        }
+
+        printf("%s\n",buffer);
+
+//        mtx.unlock();
+
+    }
+
+    delete(args1);
+    return nullptr;
+
 }
 
 int Connect::execute(vector<string> vector1) {
@@ -33,7 +85,8 @@ int Connect::execute(vector<string> vector1) {
     cout<< "Connect Command args"  << endl;
 
     if (vector1.size() < 9) {
-        fprintf(stderr,"usage %s hostname port\n", stoi(vector1[8]));
+//        fprintf(stderr,"usage %s hostname port\n", hostIp);
+        perror("not enough arguments");
         exit(0);
     }
 
@@ -65,32 +118,37 @@ int Connect::execute(vector<string> vector1) {
         exit(1);
     }
 
-    /* Now ask for a message from the user, this message
-       * will be read by server
-    */
+    cout<< "Now try to open the Client's thread"  << endl;
+    struct Args* args1 = new Args();
+    args1->sockfd = sockfd;
+    thread clientThred(ConnectClient,args1);
+    clientThred.detach();
 
-    printf("Please enter the message: ");
-    bzero(buffer,1000);
-    fgets(buffer,999,stdin);
-
-    /* Send message to the server */
-    n = write(sockfd, buffer, strlen(buffer));
-
-    if (n < 0) {
-        perror("ERROR writing to socket");
-        exit(1);
-    }
-
-    /* Now read server response */
-    bzero(buffer,1000);
-    n = read(sockfd, buffer, 999);
-
-    if (n < 0) {
-        perror("ERROR reading from socket");
-        exit(1);
-    }
-
-    printf("%s\n",buffer);
+//    /* Now ask for a message from the user, this message
+//       * will be read by server
+//    */
+//    printf("Please enter the message: ");
+//    bzero(buffer,1000);
+//    fgets(buffer,999,stdin);
+//
+//    /* Send message to the server */
+//    n = write(sockfd, buffer, strlen(buffer));
+//
+//    if (n < 0) {
+//        perror("ERROR writing to socket");
+//        exit(1);
+//    }
+//
+//    /* Now read server response */
+//    bzero(buffer,1000);
+//    n = read(sockfd, buffer, 999);
+//
+//    if (n < 0) {
+//        perror("ERROR reading from socket");
+//        exit(1);
+//    }
+//
+//    printf("%s\n",buffer);
     return 0;
 
 }

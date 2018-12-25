@@ -116,7 +116,7 @@ int OpenDataServer::execute(vector<string> vector1) {
 //    pthread_create(&trid, nullptr, ConnectServer, args1);
 //    pthread_join(trid, nullptr);
     thread serverThred(ConnectServer,args1);
-    serverThred.detach();
+//    serverThred.detach();
 
-//    return vector1.size(); //num of elements to move the index at the parser's list.
+    return vector1.size(); //num of elements to move the index at the parser's list.
 }
