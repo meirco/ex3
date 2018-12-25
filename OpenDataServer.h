@@ -15,7 +15,7 @@ using namespace std;
 class OpenDataServer: public Command {
 public:
     int execute(vector<string> vector1);
-//    static void* ConnectServer(void* args);
+
     DataBase* dataBase = dataBase->getInstance();
 
 };
