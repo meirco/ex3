@@ -19,6 +19,7 @@
 #include <thread>
 #include <mutex>
 #include "Connect.h"
+#include "DataBase.h"
 
 extern bool serverIsConnected;
 
@@ -84,7 +85,7 @@ using namespace std;
 
 //OPen
 int Connect::execute(vector<string> vector1) {
-
+        DataBase* dataBase = DataBase::getInstance();
         int sockfd, portno, n;
         struct sockaddr_in serv_addr;
         struct hostent *server;
@@ -146,28 +147,28 @@ int Connect::execute(vector<string> vector1) {
         /* Now ask for a message from the user, this message
            * will be read by server
         */
+//
+//        printf("Please enter the message: ");
+//        bzero(buffer,256);
+//        fgets(buffer,255,stdin);
+//
+//        /* Send message to the server */
+//        n = write(sockfd, buffer, strlen(buffer));
+//
+//        if (n < 0) {
+//            perror("ERROR writing to socket");
+//            exit(1);
+//        }
 
-        printf("Please enter the message: ");
-        bzero(buffer,256);
-        fgets(buffer,255,stdin);
-
-        /* Send message to the server */
-        n = write(sockfd, buffer, strlen(buffer));
-
-        if (n < 0) {
-            perror("ERROR writing to socket");
-            exit(1);
-        }
-
-        /* Now read server response */
-        bzero(buffer,256);
-        n = read(sockfd, buffer, 255);
-
-        if (n < 0) {
-            perror("ERROR reading from socket");
-            exit(1);
-        }
-
+//        /* Now read server response */
+//        bzero(buffer,256);
+//        n = read(sockfd, buffer, 255);
+//
+//        if (n < 0) {
+//            perror("ERROR reading from socket");
+//            exit(1);
+//        }
+        dataBase->setGlobalClientSockFd(sockfd); //the Client's socket will save its fd in DATABASE.
         printf("%s\n",buffer);
         return 0;
 

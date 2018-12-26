@@ -135,6 +135,14 @@ void DataBase::setOpenCloseFlag(bool openCloseFlag) {
     DataBase::openCloseFlag = openCloseFlag;
 }
 
+int DataBase::getGlobalClientSockFd()  {
+    return globalClientSockFd;
+}
+
+void DataBase::setGlobalClientSockFd(int globalClientSockFd) {
+    DataBase::globalClientSockFd = globalClientSockFd;
+}
+
 
 //void DataBase::initializeXmlDouble()  {
 //    xmlPath.push_back(0);

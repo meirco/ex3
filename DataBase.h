@@ -21,7 +21,9 @@ private:
 
     map<string,double > xmlMap;
 
-    bool openCloseFlag;
+    bool openCloseFlag; //to open the client only after the server connected.
+
+    int globalClientSockFd;
 
 
 
@@ -67,6 +69,10 @@ public:
     bool isOpenCloseFlag();
 
     void setOpenCloseFlag(bool openCloseFlag);
+
+    int getGlobalClientSockFd() ;
+
+    void setGlobalClientSockFd(int globalClientSockFd);
 
 };
 

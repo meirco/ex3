@@ -3,10 +3,54 @@
 //
 
 #include <iostream>
+#include <sys/socket.h>
 #include "Equal.h"
 #include "DataBase.h"
 #include "ShuntingYard.h"
 #include "DoubleFactory.h"
+
+
+//} else {
+//EvaluateExp *evaluateExp1= new EvaluateExp(ve[2], this->glob);
+//string eval1 = evaluateExp1->Infix_To_Prefix(ve[2]);
+//Expression *x = evaluateExp1->evaluatePrefix(eval1);
+//double value = x->calculate(ve);
+//string path;
+//path+="set ";
+//string addr=glob->OPgetVarBindTbl(ve[0]);
+//path+=addr;
+//string strValue = to_string(value);
+//path+=strValue;
+//path+="\r\n";
+//sendMessage(path);
+////  pthread_mutex_lock(&mutexIns);
+////this->glob->setIns(path);
+////  pthread_mutex_unlock(&mutexIns);
+////  pthread_mutex_lock(&mutexXml);
+//this->glob->inserSymbTbl(ve[0],value);
+////   pthread_mutex_unlock(&mutexXml);
+//}
+//}
+//
+
+void Equal:: sendMessage(string path) {
+    DataBase* dataBase1 = DataBase::getInstance();
+    char *s = const_cast<char *>(path.c_str());
+//    /* Send message to the server */
+
+    int sockfd = dataBase1->getGlobalClientSockFd();// number of socket id
+    int n;
+    if(::send(sockfd, path.data(), strlen(path.data()),0) <0){
+        perror("ERROR writing to socket");
+        exit(1);
+    };
+    cout << path.data() << endl;
+    if (n < 0) {
+        perror("ERROR writing to socket");
+        exit(1);
+    }
+}
+
 
 int Equal::execute(vector<string> vector1) {
 
@@ -60,9 +104,14 @@ int Equal::execute(vector<string> vector1) {
     double valueNew = expression->calculate();
     string var = vector1[0];
 
+    dataBase->setDoubleForVariable(var, valueNew);
+
     delete expression;
 
-    dataBase->setDoubleForVariable(var, valueNew);
+    /*Send massage to socket*/
+    string path;
+    path ="set " + left + " " + to_string(valueNew) + "\r\n";
+    sendMessage(path);
 
     return valueNew; // maybe not needed.TODO check it.
 }

@@ -14,7 +14,7 @@ list<string> lexeredList;
 
 int main() {
     DataBase* dataBase = DataBase::getInstance();
-    dataBase->setDoubleForVariable("h0", 555);
+//    dataBase->setDoubleForVariable("h0", 555);
 //    DoubleFactory("h0/5*7773-me");
 //    ShuntingYard shuntingYard("5+3");
 

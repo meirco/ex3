@@ -137,18 +137,22 @@ void lexParser:: parsering(vector<string> lexeredList) {
     DataBase* dataBase = DataBase::getInstance();
 
     commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
-    commandMap.insert(pair<string, Command*>("while", (Command*)new ConditionParser()));
-    commandMap.insert(pair<string, Command*>("if", (Command*)new ConditionParser()));
+//    commandMap.insert(pair<string, Command*>("while", (Command*)new ConditionParser()));
+//    commandMap.insert(pair<string, Command*>("if", (Command*)new ConditionParser()));
     commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
     commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));
     commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
     commandMap.insert(pair<string, Command*>("connect", (Command*)new Connect()));
-    commandMap.insert(pair<string, Command*>("bind", (Command*)new Bind()));
-    commandMap.insert(pair<string, Command*>("exit", (Command*)new Exit()));
+//    commandMap.insert(pair<string, Command*>("bind", (Command*)new Bind()));
+//    commandMap.insert(pair<string, Command*>("exit", (Command*)new Exit()));
 
     // when we need to go to equal command.
     if(dataBase->getStrDoubleMap().find(lexeredList[0]) != dataBase->getStrDoubleMap().end()) {
-        commandMap.insert(pair<string, Command*>("equal", (Command*)new Equal()));
+        commandMap.insert(pair<string, Command*>("=", (Command*)new Equal()));
+        Command *d = commandMap.at(lexeredList[1]);
+        if(d != NULL) {
+            index += d->execute(lexeredList);
+        }
 
     }
 

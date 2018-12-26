@@ -132,14 +132,14 @@ void* ConnectServer(void* args) {
                     break;
             }
         }
-        //check what we have in the XmlMap:
-        for(auto it = dataBase->getXmlMap().cbegin(); it != dataBase->getXmlMap().cend(); ++it)
-        {
-            cout <<it->first<< it->second<<endl;
-        }
+//        //check what we have in the XmlMap:
+//        for(auto it = dataBase->getXmlMap().cbegin(); it != dataBase->getXmlMap().cend(); ++it)
+//        {
+//            cout <<it->first<< it->second<<endl;
+//        }
 
 
-        printf("Here is the message: %s\n", buffer2); //print the whole line from the simulator.
+//        printf("Here is the message: %s\n", buffer2); //print the whole line from the simulator.
 
         /* Write a response to the client */
         n = write(args1->newsockfd, "I got your message", 18);
