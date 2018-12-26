@@ -21,6 +21,8 @@ private:
 
     map<string,double > xmlMap;
 
+    bool openCloseFlag;
+
 
 
 
@@ -61,6 +63,10 @@ public:
     void setXmlPath( vector<string> &xmlPath);
 
     void setXmlDoubles( vector<double> &xmlDoubles);
+
+    bool isOpenCloseFlag();
+
+    void setOpenCloseFlag(bool openCloseFlag);
 
 };
 

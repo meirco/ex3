@@ -9,6 +9,7 @@
 #include <netdb.h>
 #include <iostream>
 #include <thread>
+#include <mutex>
 #include "Connect.h"
 
 using namespace std;
@@ -24,6 +25,7 @@ struct Args{
 
 void* ConnectClient(void* args){
     int  n;
+    mutex mtx;
     char buffer[1000];
     struct Args *args1 = (struct Args*) args;
     int sockfd = args1->sockfd;
@@ -32,7 +34,7 @@ void* ConnectClient(void* args){
     cout<<"connection happend" << endl;
     while(true) {
 
-//        mtx.lock();
+        mtx.lock();
 
         /* Now ask for a message from the user, this message
        * will be read by server
@@ -60,9 +62,10 @@ void* ConnectClient(void* args){
 
         printf("%s\n",buffer);
 
-//        mtx.unlock();
+        mtx.unlock();
 
     }
+
 
     delete(args1);
     return nullptr;
@@ -121,7 +124,11 @@ int Connect::execute(vector<string> vector1) {
     args1->sockfd = sockfd;
     pthread_t trid; //Declare the thread.
     pthread_create(&trid, nullptr, ConnectClient, args1);
-//    pthread_join(trid, nullptr);
+
+    close(sockfd);
+    //    pthread_join(trid, nullptr);
+    delete(args1);
+    return vector1.size(); //num of elements to move the index at the parser's list.
 //    thread clientThred(ConnectClient,args1);
 //    clientThred.detach();
 
@@ -151,5 +158,6 @@ int Connect::execute(vector<string> vector1) {
 //
 //    printf("%s\n",buffer);
 //    return 0;
+
 
 }

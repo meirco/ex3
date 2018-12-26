@@ -2,12 +2,6 @@
 // Created by gil on 19/12/18.
 //
 
-//TODO - need to destroy the struct after the while's break
-//TODO - need to get the vars from the xml.
-
-//read the lines from the xml
-//separate with "," byh the XML format
-//save the read lines in a data base that we can pull by o(1).
 //close the socket.
 
 #include <stdlib.h>
@@ -26,7 +20,7 @@ using namespace std;
 
 struct Args{
     int numOfTimesToReadDataPerSecond;
-    int newsockfs;
+    int newsockfd;
 };
 
 void* ConnectServer(void* args) {
@@ -36,12 +30,12 @@ void* ConnectServer(void* args) {
     struct Args *args1 = (struct Args *) args;
     DataBase *dataBase = DataBase::getInstance();
 
-    while (true) { //Global flag = true;
+    while (dataBase->isOpenCloseFlag()) { //Global flag = true;
 
-        mtx.lock();
+        mtx.lock(); //critic code = we don't want that something will change the maps while we there.
 
         bzero(buffer, 1000);
-        n = read(args1->newsockfs, buffer, 999); //read line from simulator to socket.
+        n = read(args1->newsockfd, buffer, 999); //read line from simulator to socket.
 
 
         strcpy(buffer2 ,buffer); //backup for buffer.
@@ -148,7 +142,7 @@ void* ConnectServer(void* args) {
 //        printf("Here is the message: %s\n", buffer2); //print the whole line from the simulator.
 
         /* Write a response to the client */
-        n = write(args1->newsockfs, "I got your message", 18);
+        n = write(args1->newsockfd, "I got your message", 18);
 
         if (n < 0) {
             perror("ERROR writing to socket");
@@ -160,6 +154,8 @@ void* ConnectServer(void* args) {
         usleep(1 / (args1->numOfTimesToReadDataPerSecond)); // number of times to read the XML each second.
     }
 
+    /*Release all sources*/
+    close(args1->newsockfd);
     delete (args1);
     return nullptr;
 }
@@ -167,6 +163,9 @@ void* ConnectServer(void* args) {
 int OpenDataServer::execute(vector<string> vector1) {
     int sockfd, newsockfd, portno, clilen;
     struct sockaddr_in serv_addr, cli_addr;
+
+    DataBase *dataBase1 = DataBase::getInstance();
+    dataBase1->setOpenCloseFlag(true); //flag that will be true until the process will end.
 
     /* First call to socket() function */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -209,12 +208,14 @@ int OpenDataServer::execute(vector<string> vector1) {
     struct Args* args1 = new Args();
 //    args1->portNumber = stoi(vector1[1]);
     args1->numOfTimesToReadDataPerSecond=stoi(vector1[2]);
-    args1->newsockfs = newsockfd;
+    args1->newsockfd = newsockfd;
 //    thread serverThread(ConnectServer, args1);
 //    serverThread.detach();
     pthread_t trid; //Declare the thread.
     pthread_create(&trid, nullptr, ConnectServer, args1);
-//    pthread_join(trid, nullptr);
 
-//    return vector1.size(); //num of elements to move the index at the parser's list.
+//    close(sockfd);
+    //    pthread_join(trid, nullptr);
+    delete(args1);
+    return vector1.size(); //num of elements to move the index at the parser's list.
 }

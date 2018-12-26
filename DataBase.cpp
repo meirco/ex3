@@ -127,6 +127,14 @@ void DataBase:: initializeXmlPath() {
 
 }
 
+bool DataBase::isOpenCloseFlag(){
+    return openCloseFlag; //first implementation will be at the start of OpenDataServer command.
+}
+
+void DataBase::setOpenCloseFlag(bool openCloseFlag) {
+    DataBase::openCloseFlag = openCloseFlag;
+}
+
 
 //void DataBase::initializeXmlDouble()  {
 //    xmlPath.push_back(0);
