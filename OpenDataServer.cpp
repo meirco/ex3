@@ -13,15 +13,16 @@
 #include <mutex>
 #include <thread>
 #include "OpenDataServer.h"
-
-using namespace std;
-
 #define NUM_OF_ARGS 23
+
+//using namespace std;
+
 
 struct Args{
     int numOfTimesToReadDataPerSecond;
     int newsockfd;
 };
+bool serverIsConnected;
 
 void* ConnectServer(void* args) {
     int n;
@@ -36,7 +37,11 @@ void* ConnectServer(void* args) {
 
         bzero(buffer, 1000);
         n = read(args1->newsockfd, buffer, 999); //read line from simulator to socket.
-
+        if (n < 0) {
+            perror("ERROR reading from socket");
+            exit(1);
+        }
+        serverIsConnected = true;
 
         strcpy(buffer2 ,buffer); //backup for buffer.
 
@@ -134,11 +139,6 @@ void* ConnectServer(void* args) {
         }
 
 
-        if (n < 0) {
-            perror("ERROR reading from socket");
-            exit(1);
-        }
-
         printf("Here is the message: %s\n", buffer2); //print the whole line from the simulator.
 
         /* Write a response to the client */
@@ -155,7 +155,7 @@ void* ConnectServer(void* args) {
     }
 
     /*Release all sources*/
-    close(args1->newsockfd);
+//    close(args1->newsockfd);
     delete (args1);
     return nullptr;
 }
@@ -163,6 +163,7 @@ void* ConnectServer(void* args) {
 int OpenDataServer::execute(vector<string> vector1) {
     int sockfd, newsockfd, portno, clilen;
     struct sockaddr_in serv_addr, cli_addr;
+    serverIsConnected = false;
 
     DataBase *dataBase1 = DataBase::getInstance();
     dataBase1->setOpenCloseFlag(true); //flag that will be true until the process will end.
@@ -215,7 +216,7 @@ int OpenDataServer::execute(vector<string> vector1) {
     pthread_create(&trid, nullptr, ConnectServer, args1);
 
 //    close(sockfd);
-        pthread_join(trid, nullptr);
-    delete(args1);
+//        pthread_join(trid, nullptr);
+//    delete(args1);
     return vector1.size(); //num of elements to move the index at the parser's list.
 }

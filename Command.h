@@ -25,6 +25,7 @@ public:
 //if
 //print
 //sleep
+//exit
 
 // git clone https://github.com/meirco/ex3.git
 
