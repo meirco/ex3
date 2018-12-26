@@ -125,7 +125,7 @@ int Connect::execute(vector<string> vector1) {
     pthread_t trid; //Declare the thread.
     pthread_create(&trid, nullptr, ConnectClient, args1);
 
-    close(sockfd);
+//    close(sockfd);
     //    pthread_join(trid, nullptr);
     delete(args1);
     return vector1.size(); //num of elements to move the index at the parser's list.

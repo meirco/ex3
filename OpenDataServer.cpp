@@ -127,11 +127,11 @@ void* ConnectServer(void* args) {
                     break;
             }
         }
-//        //check what we have in the XmlMap:
-//        for(auto it = dataBase->getXmlMap().cbegin(); it != dataBase->getXmlMap().cend(); ++it)
-//        {
-//            cout <<it->first<< it->second<<endl;
-//        }
+        //check what we have in the XmlMap:
+        for(auto it = dataBase->getXmlMap().cbegin(); it != dataBase->getXmlMap().cend(); ++it)
+        {
+            cout <<it->first<< it->second<<endl;
+        }
 
 
         if (n < 0) {
@@ -139,7 +139,7 @@ void* ConnectServer(void* args) {
             exit(1);
         }
 
-//        printf("Here is the message: %s\n", buffer2); //print the whole line from the simulator.
+        printf("Here is the message: %s\n", buffer2); //print the whole line from the simulator.
 
         /* Write a response to the client */
         n = write(args1->newsockfd, "I got your message", 18);
@@ -151,7 +151,7 @@ void* ConnectServer(void* args) {
 
         mtx.unlock(); //finish critic code = unlock mtx.
 
-        usleep(1 / (args1->numOfTimesToReadDataPerSecond)); // number of times to read the XML each second.
+        usleep((1 / (args1->numOfTimesToReadDataPerSecond))*1000); // number of times to read the XML each second.
     }
 
     /*Release all sources*/
@@ -215,7 +215,7 @@ int OpenDataServer::execute(vector<string> vector1) {
     pthread_create(&trid, nullptr, ConnectServer, args1);
 
 //    close(sockfd);
-    //    pthread_join(trid, nullptr);
+        pthread_join(trid, nullptr);
     delete(args1);
     return vector1.size(); //num of elements to move the index at the parser's list.
 }
