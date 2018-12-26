@@ -10,6 +10,10 @@
 #include "DataBase.h"
 
 class Exit : public Command{
+public:
+    int execute(vector<string> vector1) override;
+
+private:
     DataBase* dataBase = DataBase ::getInstance();
 
 };

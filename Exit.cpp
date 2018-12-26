@@ -3,3 +3,7 @@
 //
 
 #include "Exit.h"
+
+int Exit::execute(vector<string> vector1) {
+    return 0;
+}
