@@ -21,10 +21,14 @@ public:
     vector<string>lexerList;
     map<string, Command*> commandMap;
 
-
+    const map<string, Command *> &getCommandMap() const;
 
 
     lexParser(string str);
+    lexParser() {
+        lexerList.clear();
+    }
+    ~lexParser();
 
     vector<string> start(string str);
 

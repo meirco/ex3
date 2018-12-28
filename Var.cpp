@@ -45,6 +45,8 @@ int Var::execute(vector<string> vector1) {
 
 
         // insert the 2 strings of the "var" command into a map and insert 0 to the variable in the second map.
+        copyPathFromVector = copyPathFromVector.substr(copyPathFromVector.find("/") + 1);
+        copyPathFromVector = copyPathFromVector.substr(0, copyPathFromVector.find("\""));
         dataBase->setStringsForPath(vector1[1], copyPathFromVector);
         dataBase->setDoubleForVariable(vector1[1], 0);
 

@@ -27,15 +27,32 @@ using namespace std;
 
 
 lexParser::lexParser(string str) {
+    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
+    commandMap.insert(pair<string, Command*>("while", (Command*)new ConditionParser()));
+    commandMap.insert(pair<string, Command*>("if", (Command*)new ConditionParser()));
+    commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
+    commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));
+    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
+    commandMap.insert(pair<string, Command*>("connect", (Command*)new Connect()));
+    commandMap.insert(pair<string, Command*>("bind", (Command*)new Bind()));
+    commandMap.insert(pair<string, Command*>("exit", (Command*)new Exit()));
+
     this->str = str;
+    lexerList.clear();
     lexerList = start(str);
     parsering(lexerList);
+
 
 }
 
 
+lexParser::~lexParser()
+{
+    ////// iterate over the commandMap and delete all commands
+}
 
 vector<string> lexParser:: start (string str) {
+    lexerList.clear();
     int s; // help us to get all the operators.
 
     string correctStr, command;
@@ -53,7 +70,7 @@ vector<string> lexParser:: start (string str) {
     while (str.length() > 0) {
         i = 0;
         j = 1;
-        for (j = 1; j < str.length(); j++, i++) {
+        for (j = 1; j <= str.length(); j++, i++) {
             if (((regex_match(str.substr(0, 1), reg2) != 0) && (str.substr(0, 1) != " ") && (str.at(0) != ' '))
                 || regex_match(str.substr(0, 1), reg3) != 0) {
                 break;
@@ -65,7 +82,7 @@ vector<string> lexParser:: start (string str) {
                 str.erase(0, 1);
             }
         }
-        while(str.at(0) == ' ') {
+        while(str.length() > 0 && str.at(0) == ' ') {
             str.erase(0, 1);
         }
 
@@ -73,7 +90,7 @@ vector<string> lexParser:: start (string str) {
 
         int index = 0;
         int l = 0;
-        for (l = 0; l <= str.length(); ++l) {
+        for (l = 0; l < str.length(); ++l) {
             if ((str.at(l) == ' ')  || (l == str.length() - 1)) {
                 if(l == str.length() - 1) {
                     lexerList.push_back(str);
@@ -136,15 +153,7 @@ void lexParser:: parsering(vector<string> lexeredList) {
     int index = 0;
     DataBase* dataBase = DataBase::getInstance();
 
-    commandMap.insert(pair<string, Command*>("sleep", (Command*)new Sleep()));
-//    commandMap.insert(pair<string, Command*>("while", (Command*)new ConditionParser()));
-//    commandMap.insert(pair<string, Command*>("if", (Command*)new ConditionParser()));
-    commandMap.insert(pair<string, Command*>("print", (Command*)new Print()));
-    commandMap.insert(pair<string, Command*>("var", (Command*)new Var()));
-    commandMap.insert(pair<string, Command*>("openDataServer", (Command*)new OpenDataServer()));
-    commandMap.insert(pair<string, Command*>("connect", (Command*)new Connect()));
-//    commandMap.insert(pair<string, Command*>("bind", (Command*)new Bind()));
-//    commandMap.insert(pair<string, Command*>("exit", (Command*)new Exit()));
+
 
     // when we need to go to equal command.
     if(dataBase->getStrDoubleMap().find(lexeredList[0]) != dataBase->getStrDoubleMap().end()) {
@@ -154,15 +163,18 @@ void lexParser:: parsering(vector<string> lexeredList) {
             index += d->execute(lexeredList);
         }
 
+    } else {
+
+        Command *c = commandMap.at(lexeredList[0]);
+        if (c != NULL) {
+            index += c->execute(lexeredList); // getting the specific line.
+
+        }
     }
 
 
-    Command *c = commandMap.at(lexeredList[0]);
-    if(c != NULL) {
-        index += c->execute(lexeredList); // getting the specific line.
+}
 
-    }
-
-
-
+const map<string, Command *> &lexParser::getCommandMap() const {
+    return commandMap;
 }

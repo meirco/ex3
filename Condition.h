@@ -16,31 +16,38 @@ public:
 
 class CompareCondition : public Condition {
 protected:
-    Expression *left;
-    Expression *right;
+    double left;
+    double right;
 public:
-    CompareCondition(Expression *left1, Expression *right1) : left(left1), right(right1) {}
+    CompareCondition(double left1, double right1) : left(left1), right(right1) {}
     CompareCondition() {}
 
     virtual bool evaluate() =0;
 };
 
-class OperatorSmall : public CompareCondition{
+class OperatorSmall : public CompareCondition {
+public:
+    OperatorSmall(double left1, double right1) : CompareCondition(left1, right1) {}
+
 public:
     bool evaluate(){
-        return this->left > this->right;
+        return left < right;
     }
 };
 
 class OperatorBig : public CompareCondition{
 public:
+    OperatorBig(double left1, double right1)  : CompareCondition(left1, right1) {}
+
     bool evaluate(){
-        return this->left < this->right;
+        return this->left > this->right;
     }
 };
 
 class OperatorSmallEqual : public CompareCondition{
 public:
+    OperatorSmallEqual(double left1, double right1)  : CompareCondition(left1, right1) {}
+
     bool evaluate(){
         return this->left <= this->right;
     }
@@ -48,6 +55,8 @@ public:
 
 class OperatorBigEqual : public CompareCondition{
 public:
+    OperatorBigEqual(double left1, double right1)  : CompareCondition(left1, right1) {}
+
     bool evaluate(){
         return this->left >= this->right;
     }
@@ -55,13 +64,17 @@ public:
 
 class OperatorNotEqual : public CompareCondition{
 public:
+    OperatorNotEqual(double left1, double right1)  : CompareCondition(left1, right1) {}
+
     bool evaluate(){
         return this->left != this->right;
     }
 };
 
-class OperatorEqual : public CompareCondition{
+class OperatorEquals : public CompareCondition{
 public:
+    OperatorEquals(double left1, double right1)  : CompareCondition(left1, right1) {}
+
     bool evaluate(){
         return this->left == this->right;
     }

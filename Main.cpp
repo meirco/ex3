@@ -28,6 +28,8 @@ int main() {
     if(myFile.is_open()) {
         while(!myFile.eof()) {
             getline(myFile, line);
+            if (line.size() == 0)
+                break;
 
             while(line.at(0) == ' ') {
                 line.erase(0,1);
@@ -41,9 +43,9 @@ int main() {
                     if(conditionLines.substr(0,5) == "while" ||(conditionLines.substr(0,2) == "if")) {
                         sulsulCount++;
                     }
-                    line+= "$"; // $ is symbol of new line.
+                    line+= " $ "; // $ is symbol of new line.
                     line += conditionLines;
-                    if(conditionLines.substr(0,1) == "}") {
+                    if(conditionLines.find('}') != string::npos) {
                         sulsulCount--;
                         if(sulsulCount == 0) {
                             break; // go out from while loop

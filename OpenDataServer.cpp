@@ -44,6 +44,7 @@ void* ConnectServer(void* args) {
         serverIsConnected = true;
 
         strcpy(buffer2 ,buffer); //backup for buffer.
+        //cout << "Buffer " <<  buffer << endl;
 
         /* now we take the buffer, saperate to tokens and insert them to vector*/
         vector<double> lineArguments;
@@ -53,6 +54,7 @@ void* ConnectServer(void* args) {
             lineArguments.push_back(stod(copyString)); //insert current token to vector
             copyString = strtok(NULL, ","); //Yani i++ next token
         }
+        //cout << "lineArguments " <<  lineArguments.size() << endl;
 
         for (int i = 0; i < NUM_OF_ARGS; ++i) { //max args = 23
 
@@ -133,10 +135,10 @@ void* ConnectServer(void* args) {
             }
         }
 //        //check what we have in the XmlMap:
-//        for(auto it = dataBase->getXmlMap().cbegin(); it != dataBase->getXmlMap().cend(); ++it)
-//        {
-//            cout <<it->first<< it->second<<endl;
-//        }
+        for(auto it = dataBase->getXmlMap().cbegin(); it != dataBase->getXmlMap().cend(); ++it)
+        {
+            cout <<it->first<< it->second<<endl;
+        }
 
 
 //        printf("Here is the message: %s\n", buffer2); //print the whole line from the simulator.

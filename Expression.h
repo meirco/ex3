@@ -2,10 +2,11 @@
 // Created by gil on 18/12/18.
 //
 
-#include <cmath>
-
 #ifndef EX3_EXPRESSION_H
 #define EX3_EXPRESSION_H
+
+#include <cmath>
+#include "DataBase.h"
 
 class Expression {
 public:
@@ -23,6 +24,32 @@ public:
     }
 };
 
+class VariableExpression : public Expression {
+private:
+    string varName;
+public:
+    VariableExpression(const string &_varName) : varName(_varName) {}
+    virtual double calculate() {
+        varName = remove_ws(varName);
+        DataBase* dataBase = DataBase::getInstance();
+        map<string, double>  vars = dataBase->getStrDoubleMap();
+        map<string, double>::iterator it = vars.find(varName);
+        if (it != vars.end())
+            return it->second;
+        else
+            return stod(varName);
+
+    }
+    string remove_ws(const string& str)
+    {
+        string str_no_ws;
+        for (char c: str)
+            if (! std::isspace(c))
+                str_no_ws += c;
+        return str_no_ws;
+    }
+};
+
 class BinaryExpression : public Expression{
 protected:
     Expression* left;
@@ -32,6 +59,10 @@ public:
     BinaryExpression(Expression *left, Expression *right) : left(left), right(right) {}
 
     BinaryExpression() {}
+    ~BinaryExpression() {
+        delete left;
+        delete right;
+    }
 };
 
 class Plus : public BinaryExpression{

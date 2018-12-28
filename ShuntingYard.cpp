@@ -101,8 +101,15 @@ int ShuntingYard:: checkNeg(string token) {
 Expression* ShuntingYard:: evaluate(string tokens) {
     int i;
 
+    // checking if the token is a variable from the vars maps
+    DataBase* dataBase = DataBase::getInstance();
+    if(dataBase->getStrDoubleMap().find(tokens) != dataBase->getStrDoubleMap().end()) {
+        Expression* expression1 = new VariableExpression(tokens);
+        return expression1;
+    }
+
     // stack to store integer values.
-    stack <Expression*> values;
+    stack<Expression *> values;
 //        queue<Expression> queue1;
 
     // stack to store operators.

@@ -9,8 +9,18 @@
 #include <map>
 #include "Command.h"
 
+class VariableExpression;
+
 class ConditionParser : public Command {
+
+    VariableExpression* leftExp;
+    VariableExpression* rightExp;
+    double leftValue;
+    double rightValue;
+    string conditionOper;
 public:
+
+     vector<Command*> commandsVec;
 
     map<int, string> commandLineMap;
 
@@ -18,10 +28,21 @@ public:
 
     enum Conditions{};
 
+    ConditionParser();
+    ~ConditionParser();
+
     int execute(vector<string> vector1) override;
 
+    bool toContinue();
 
 
+     vector<Command *> &getCommandsVec() ;
+
+    double getLeftValue() ;
+
+    double getRightValue() ;
+
+    const string &getConditionOper() ;
 
 };
 

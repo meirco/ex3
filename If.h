@@ -6,10 +6,12 @@
 #define EX3_IF_H
 
 
-#include "Command.h"
+#include "While.h"
 
-class If : public Command {
+class If : public While {
 public:
+    If(ConditionParser*);
+
     int execute(vector<string> vector1) override;
 
 };

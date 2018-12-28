@@ -85,20 +85,20 @@ using namespace std;
 
 //OPen
 int Connect::execute(vector<string> vector1) {
-        DataBase* dataBase = DataBase::getInstance();
-        int sockfd, portno, n;
-        struct sockaddr_in serv_addr;
-        struct hostent *server;
-        string hostIp;
+    DataBase *dataBase = DataBase::getInstance();
+    int sockfd, portno, n;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+    string hostIp;
 
-        char buffer[1000];
+    char buffer[1000];
 
-        for (int i = 1; i <vector1.size()-1 ; ++i) {
-            hostIp += vector1[i];
-        }
-    cout<< hostIp<<endl;
+    for (int i = 1; i < vector1.size() - 1; ++i) {
+        hostIp += vector1[i];
+    }
+    cout << hostIp << endl;
 
-        if (vector1.size() < 9) {
+    if (vector1.size() < 9) {
         perror("not enough arguments");
         exit(0);
     }
@@ -108,45 +108,45 @@ int Connect::execute(vector<string> vector1) {
 
     if (vector1.size() < 9) {
         perror("ERROR opening socket");
-            exit(0);
-        }
+        exit(0);
+    }
 
     portno = stoi(vector1[8]);
 
-    while (serverIsConnected == false){
+    while (serverIsConnected == false) {
 
     }
 
-        /* Create a socket point */
-        sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    /* Create a socket point */
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
-        if (sockfd < 0) {
-            perror("ERROR opening socket");
-            exit(1);
-        }
+    if (sockfd < 0) {
+        perror("ERROR opening socket");
+        exit(1);
+    }
 
     server = gethostbyname(hostIp.c_str());
-        cout<<"Creating a client's socket"<<endl;
+    cout << "Creating a client's socket" << endl;
 
-        if (server == NULL) {
-            fprintf(stderr,"ERROR, no such host\n");
-            exit(0);
-        }
+    if (server == NULL) {
+        fprintf(stderr, "ERROR, no such host\n");
+        exit(0);
+    }
 
-        bzero((char *) &serv_addr, sizeof(serv_addr));
-        serv_addr.sin_family = AF_INET;
-        bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
-        serv_addr.sin_port = htons(portno);
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    bcopy((char *) server->h_addr, (char *) &serv_addr.sin_addr.s_addr, server->h_length);
+    serv_addr.sin_port = htons(portno);
 
-        /* Now connect to the server */
-        if (connect(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
-            perror("ERROR connecting");
-            exit(1);
-        }
+    /* Now connect to the server */
+    if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+        perror("ERROR connecting");
+        exit(1);
+    }
 
-        /* Now ask for a message from the user, this message
-           * will be read by server
-        */
+    /* Now ask for a message from the user, this message
+       * will be read by server
+    */
 //
 //        printf("Please enter the message: ");
 //        bzero(buffer,256);
@@ -168,9 +168,8 @@ int Connect::execute(vector<string> vector1) {
 //            perror("ERROR reading from socket");
 //            exit(1);
 //        }
-        dataBase->setGlobalClientSockFd(sockfd); //the Client's socket will save its fd in DATABASE.
-        printf("%s\n",buffer);
-        return 0;
+    dataBase->setGlobalClientSockFd(sockfd); //the Client's socket will save its fd in DATABASE.
+    return 0;
 
 }
 //    int sockfd, portno, n;

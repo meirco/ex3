@@ -35,15 +35,12 @@ int Print::execute(vector<string> vector1) {
     if(w) {
         cout << allStr<< endl; // TODO erase the ".
     }
+    else if(w == false) {
 
-
-    // w has a value
-    else {
         string extractFromVar = doubleFactory.convertToDouble(allStr);
         Expression* expressionPtr = shuntingYard.evaluate(extractFromVar);
         double newValue = expressionPtr->calculate();
         cout << newValue<< endl;
-
     }
 
     return 1;

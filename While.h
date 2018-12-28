@@ -7,10 +7,19 @@
 
 
 #include "Command.h"
+#include "LexParser.h"
+#include "ConditionParser.h"
+
 
 class While : public Command {
+
+protected:
+    ConditionParser* cond;
+
 public:
-    int execute(vector<string> vector1) override;
+    While(ConditionParser*);
+
+    int execute(vector<string> vector1);
 
 };
 
